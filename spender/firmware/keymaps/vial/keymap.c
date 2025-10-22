@@ -21,6 +21,9 @@ void keyboard_post_init_user(void) {
 
 // ---------------- LAYER --------------------------------------------------------------
 
+// Clear keycode timer;
+uint16_t keycode_timer = 0;
+
 enum custom_keycodes {
     ALT_GUI = SAFE_RANGE,
 };
@@ -54,26 +57,16 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         print("Slave encoder: counter clockwise\n");
     }
 
+    // Clear current keycode display
+    oled_set_cursor(0, 3);
+    oled_advance_page(true);
+
+    // Render current rotation
+    oled_set_cursor(8, 3);
+    keycode_timer = timer_read();
+
     switch (get_highest_layer(layer_state | default_layer_state)) {
         case 0:
-            // Alt tab / shift alt tab
-            // Windows: Alt tab (need to hold alt)
-            // MacOS: Command tab (need to hold command)
-            register_code(current_os == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
-            if (clockwise) {
-                if (!is_alt_tab_active) {
-                    is_alt_tab_active = true;
-                }
-                alt_tab_timer = timer_read();
-                tap_code(KC_TAB);
-            } else {
-                if (!is_alt_shift_tab_active) {
-                    is_alt_shift_tab_active = true;
-                }
-                alt_tab_timer = timer_read();
-                tap_code16(LSFT(KC_TAB));
-            }
-            break;
         case 1:
             // Alt tab / shift alt tab
             // Windows: Alt tab (need to hold alt)
@@ -85,20 +78,24 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 }
                 alt_tab_timer = timer_read();
                 tap_code(KC_TAB);
+                oled_write_ln("ALT_GUI_CW", false);
             } else {
                 if (!is_alt_shift_tab_active) {
                     is_alt_shift_tab_active = true;
                 }
                 alt_tab_timer = timer_read();
                 tap_code16(LSFT(KC_TAB));
+                oled_write_ln("ALT_GUI_CCW", false);
             }
             break;
         case 2:
             // Volume up / down
             if (clockwise) {
                 tap_code(KC_VOLU);
+                oled_write_ln("VOLU_CW", false);
             } else {
                 tap_code(KC_VOLD);
+                oled_write_ln("VOLD_CCW", false);
             }
             break;
     }
@@ -119,9 +116,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 // WPM and row/column texts
 char text_wpm[10];
 char text_row_col[13];
-
-// Clear keycode timer;
-uint16_t keycode_timer = 0;
 
 // Keyboard Matrix display
 #define MATRIX_DISPLAY_X 36
