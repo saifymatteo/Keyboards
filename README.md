@@ -6,7 +6,7 @@ Powered by [QMK](https://qmk.fm/)
 
 Ensure these are installed:
 
-1. Fork [QMK repository](https://github.com/qmk/qmk_firmware) and clone to your local machine
+1. Fork [QMK repository](https://github.com/qmk/qmk_firmware) or [VIAL repository](https://github.com/vial-kb/vial-qmk) and clone to your local machine
 2. Setup QMK [through here](https://docs.qmk.fm/newbs_getting_started)
 
 This repository is intended to use together with symbolic link as it only contains necessary files for a QMK keyboard files.
@@ -18,11 +18,6 @@ To make symbolic link, use these:
 ### VS Code Setup
 
 Follow this [guide](https://docs.qmk.fm/other_vscode). To summarise, these are what you need:
-
-1. Git
-2. VS Code
-
-VS Code extension:
 
 1. [clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
 
@@ -57,6 +52,8 @@ make saifymatteo/spender/firmware:vial
 qmk flash saifymatteo_spender_firmware_vial.hex --mcu AT90USB1286
 ```
 
+Then enter bootloader and it will auto flash
+
 ### Tractyl Manuster
 
 To compiles, run these:
@@ -66,4 +63,4 @@ To compiles, run these:
 make saifymatteo/tractyl_manuster/firmware/rp2040:vial_rp2040
 ```
 
-Then enter bootloader and copy paste `saifymatteo_tractyl_manuster_firmware_rp2040_vial_rp2040.uf2`
+Then enter bootloader and copy paste `saifymatteo_tractyl_manuster_firmware_rp2040_vial_rp2040.uf2` into RP2040 drive
