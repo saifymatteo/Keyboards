@@ -52,8 +52,9 @@ To compiles, run these:
 ```bash
 # Compiles
 make saifymatteo/spender/firmware:vial
+
 # Flash
-qmk saifymatteo_spender_firmware_vial.hex --mcu AT90USB1286
+qmk flash saifymatteo_spender_firmware_vial.hex --mcu AT90USB1286
 ```
 
 ### Tractyl Manuster
@@ -64,3 +65,5 @@ To compiles, run these:
 # Compiles
 make saifymatteo/tractyl_manuster/firmware/rp2040:vial_rp2040
 ```
+
+Then enter bootloader and copy paste `saifymatteo_tractyl_manuster_firmware_rp2040_vial_rp2040.uf2`
