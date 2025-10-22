@@ -1,0 +1,66 @@
+# Keyboard
+
+Powered by [QMK](https://qmk.fm/)
+
+## Getting Started
+
+Ensure these are installed:
+
+1. Fork [QMK repository](https://github.com/qmk/qmk_firmware) and clone to your local machine
+2. Setup QMK [through here](https://docs.qmk.fm/newbs_getting_started)
+
+This repository is intended to use together with symbolic link as it only contains necessary files for a QMK keyboard files.
+
+To make symbolic link, use these:
+
+1. MacOS - `ln -s <path-to-this-repo> <path-to-qmk-firmware>/keyboards/saifymatteo`
+
+### VS Code Setup
+
+Follow this [guide](https://docs.qmk.fm/other_vscode). To summarise, these are what you need:
+
+1. Git
+2. VS Code
+
+VS Code extension:
+
+1. [clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
+
+To configure, first need to compile to generate the `compile_commands.json`
+
+Run this:
+
+```bash
+# Spender
+qmk compile -kb saifymatteo/spender/firmware -km vial --compiledb
+
+# Tractyl Manuster
+qmk compile -kb saifymatteo/tractyl_manuster/firmware/rp2040 -km vial_rp2040 --compiledb
+```
+
+Then in VS Code, run these command palette in order:
+
+1. `clangd: Download Language Server` - only needed to run once after extension installed
+2. `clangd: Restart Language Server`
+
+## Compiles & Flashing
+
+### Spender
+
+To compiles, run these:
+
+```bash
+# Compiles
+make saifymatteo/spender/firmware:vial
+# Flash
+qmk saifymatteo_spender_firmware_vial.hex --mcu AT90USB1286
+```
+
+### Tractyl Manuster
+
+To compiles, run these:
+
+```bash
+# Compiles
+make saifymatteo/tractyl_manuster/firmware/rp2040:vial_rp2040
+```
