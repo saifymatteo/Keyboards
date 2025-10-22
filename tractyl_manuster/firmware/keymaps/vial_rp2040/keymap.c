@@ -67,27 +67,30 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
     os_variant_t current_os = detected_host_os();
 
-    if (is_slave_left) {
-        if (clockwise) {
+    // Update keycode timer
+    keycode_timer = timer_read();
+
+    // Set matrix for Rotary rotation
+    oled_set_cursor(0, 3);
+
+    if (clockwise) {
+        oled_write_ln("--RE->", false);
+        if (is_slave_left) {
             print("Slave encoder: clockwise\n");
-        } else {
-            print("Slave encoder: counter clockwise\n");
-        }
-    } else if (is_master_right) {
-        if (clockwise) {
+        } else if (is_master_right) {
             print("Master encoder: clockwise\n");
-        } else {
+        }
+    } else {
+        oled_write_ln("<-RE--", false);
+        if (is_slave_left) {
+            print("Slave encoder: counter clockwise\n");
+        } else if (is_master_right) {
             print("Master encoder: counter clockwise\n");
         }
     }
 
-    // Clear current keycode display
-    oled_set_cursor(0, 3);
-    oled_advance_page(true);
-
-    // Render current rotation
+    // Set keycode for Rotary rotation
     oled_set_cursor(8, 3);
-    keycode_timer = timer_read();
 
     switch (get_highest_layer(layer_state | default_layer_state)) {
         case 0:
@@ -103,14 +106,14 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                     }
                     alt_tab_timer = timer_read();
                     tap_code(KC_TAB);
-                    oled_write_ln("ALT_GUI_CW", false);
+                    oled_write_ln("RE_ALT_GUI", false);
                 } else {
                     if (!is_alt_shift_tab_active) {
                         is_alt_shift_tab_active = true;
                     }
                     alt_tab_timer = timer_read();
                     tap_code16(LSFT(KC_TAB));
-                    oled_write_ln("ALT_GUI_CCW", false);
+                    oled_write_ln("RE_ALT_GUI", false);
                 }
             } else if (is_master_right) {
                 // Windows: Magnifier - Windows plus/minus sign
@@ -124,7 +127,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                     } else if (current_os == OS_MACOS) {
                         tap_code16(LCA(KC_KP_PLUS));
                     }
-                    oled_write_ln("ZOOM_CW", false);
+                    oled_write_ln("RE_ZOOM", false);
                 } else {
                     if (current_os == OS_WINDOWS) {
                         tap_code16(LGUI(KC_KP_MINUS));
@@ -133,7 +136,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                     } else if (current_os == OS_MACOS) {
                         tap_code16(LCA(KC_KP_MINUS));
                     }
-                    oled_write_ln("ZOOM_CCW", false);
+                    oled_write_ln("RE_ZOOM", false);
                 }
             }
             break;
@@ -142,18 +145,18 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             if (is_slave_left) {
                 if (clockwise) {
                     tap_code(KC_VOLU);
-                    oled_write_ln("VOLU_CW", false);
+                    oled_write_ln("RE_VOLU", false);
                 } else {
                     tap_code(KC_VOLD);
-                    oled_write_ln("VOLD_CCW", false);
+                    oled_write_ln("RE_VOLD", false);
                 }
             } else if (is_master_right) {
                 if (clockwise) {
                     tap_code(KC_MEDIA_NEXT_TRACK);
-                    oled_write_ln("MEDIA_CW", false);
+                    oled_write_ln("RE_MEDIA", false);
                 } else {
                     tap_code(KC_MEDIA_PREV_TRACK);
-                    oled_write_ln("MEDIA_CCW", false);
+                    oled_write_ln("RE_MEDIA", false);
                 }
             }
             break;
@@ -162,18 +165,18 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             if (is_slave_left) {
                 if (clockwise) {
                     tap_code16(current_os == OS_MACOS ? LALT(KC_RIGHT) : LCTL(KC_RIGHT));
-                    oled_write_ln("WORD_CW", false);
+                    oled_write_ln("RE_WORD", false);
                 } else {
                     tap_code16(current_os == OS_MACOS ? LALT(KC_LEFT) : LCTL(KC_LEFT));
-                    oled_write_ln("WORD_CCW", false);
+                    oled_write_ln("RE_WORD", false);
                 }
             } else if (is_master_right) {
                 if (clockwise) {
                     tap_code(KC_PAGE_UP);
-                    oled_write_ln("PAGE_UP_CW", false);
+                    oled_write_ln("RE_PAGE_UP", false);
                 } else {
                     tap_code(KC_PAGE_DOWN);
-                    oled_write_ln("PAGE_DW_CCW", false);
+                    oled_write_ln("RE_PAGE_DW", false);
                 }
             }
             break;

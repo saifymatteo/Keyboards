@@ -51,19 +51,22 @@ uint16_t alt_tab_timer           = 0;
 bool encoder_update_user(uint8_t index, bool clockwise) {
     os_variant_t current_os = detected_host_os();
 
+    // Update keycode timer
+    keycode_timer = timer_read();
+
+    // Set matrix for Rotary rotation
+    oled_set_cursor(0, 3);
+
     if (clockwise) {
+        oled_write_ln("--RE->", false);
         print("Slave encoder: clockwise\n");
     } else {
+        oled_write_ln("<-RE--", false);
         print("Slave encoder: counter clockwise\n");
     }
 
-    // Clear current keycode display
-    oled_set_cursor(0, 3);
-    oled_advance_page(true);
-
-    // Render current rotation
+    // Set keycode for Rotary rotation
     oled_set_cursor(8, 3);
-    keycode_timer = timer_read();
 
     switch (get_highest_layer(layer_state | default_layer_state)) {
         case 0:
@@ -78,24 +81,24 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 }
                 alt_tab_timer = timer_read();
                 tap_code(KC_TAB);
-                oled_write_ln("ALT_GUI_CW", false);
+                oled_write_ln("RE_ALT_GUI", false);
             } else {
                 if (!is_alt_shift_tab_active) {
                     is_alt_shift_tab_active = true;
                 }
                 alt_tab_timer = timer_read();
                 tap_code16(LSFT(KC_TAB));
-                oled_write_ln("ALT_GUI_CCW", false);
+                oled_write_ln("RE_ALT_GUI", false);
             }
             break;
         case 2:
             // Volume up / down
             if (clockwise) {
                 tap_code(KC_VOLU);
-                oled_write_ln("VOLU_CW", false);
+                oled_write_ln("RE_VOLU", false);
             } else {
                 tap_code(KC_VOLD);
-                oled_write_ln("VOLD_CCW", false);
+                oled_write_ln("RE_VOLD", false);
             }
             break;
     }
