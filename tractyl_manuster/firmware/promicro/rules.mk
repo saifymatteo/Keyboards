@@ -1,0 +1,2 @@
+# Bootloader
+BOOTLOADER = caterina
