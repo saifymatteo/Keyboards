@@ -40,6 +40,17 @@ bool should_process_keypress(void) {
 // Clear keycode timer;
 uint16_t keycode_timer = 0;
 
+const char *translate_keycode_string(uint16_t keycode) {
+    switch (keycode) {
+        case SNIPING_MODE:
+            return "SNIPING";
+        case DRAGSCROLL_MODE:
+            return "DRAGSCROLL";
+        default:
+            return get_keycode_string(keycode);
+    }
+}
+
 enum custom_keycodes {
     ALT_GUI = SAFE_RANGE,
     ZOOM,
@@ -335,7 +346,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     os_variant_t current_os = detected_host_os();
 
     // Debug keycodes
-    printf("Key: %s\n", get_keycode_string(keycode));
+    printf("Key: %s\n", translate_keycode_string(keycode));
     switch (current_os) {
         case OS_LINUX:
             printf("OS: Linux\n");
@@ -372,7 +383,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         // Render current key name
         oled_set_cursor(8, 3);
-        oled_write_ln(get_keycode_string(keycode), false);
+        oled_write_ln(translate_keycode_string(keycode), false);
 
         // Update timer
         keycode_timer = timer_read();
