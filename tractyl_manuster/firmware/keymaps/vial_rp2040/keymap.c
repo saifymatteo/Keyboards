@@ -345,25 +345,27 @@ bool oled_task_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     os_variant_t current_os = detected_host_os();
 
-    // Debug keycodes
-    printf("Key: %s\n", translate_keycode_string(keycode));
+    // Debug prints
     switch (current_os) {
         case OS_LINUX:
-            printf("OS: Linux\n");
+            printf("OS: Linux");
             break;
         case OS_WINDOWS:
-            printf("OS: Windows\n");
+            printf("OS: Windows");
             break;
         case OS_MACOS:
-            printf("OS: MacOS\n");
+            printf("OS: MacOS");
             break;
         case OS_IOS:
-            printf("OS: iOS\n");
+            printf("OS: iOS");
             break;
         case OS_UNSURE:
-            printf("OS: Unsure\n");
+            printf("OS: Unsure");
             break;
     }
+    printf(" | "); // Separator
+    printf("Key: %s", translate_keycode_string(keycode));
+    printf("\n"); // New line
 
     // Haptic trigger, immediate vibrate with 350ms duration
     gpio_write_pin_high(GP13);
