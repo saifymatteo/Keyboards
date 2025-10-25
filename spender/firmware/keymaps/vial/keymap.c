@@ -59,10 +59,10 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
     if (clockwise) {
         oled_write_ln("--RE->", false);
-        print("Slave encoder: clockwise\n");
+        print("Encoder: clockwise\n");
     } else {
         oled_write_ln("<-RE--", false);
-        print("Slave encoder: counter clockwise\n");
+        print("Encoder: counter clockwise\n");
     }
 
     // Set keycode for Rotary rotation
