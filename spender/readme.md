@@ -83,37 +83,46 @@ Please see [QMK flashing](#flashing)
 
 <details>
 <summary>Solder full view</summary>
+
 ![solder-full-view](images/PXL_20250216_154539033.jpg)
 </details>
 <details>
 <summary>Solder center view</summary>
+
 ![solder-center](images/PXL_20250216_154555371.jpg)
 </details>
 <details>
 <summary>Solder right side view</summary>
+
 ![solder-right-side](images/PXL_20250216_154619732.jpg)
 </details>
 <details>
 <summary>Solder left side view</summary>
+
 ![solder-left-side](images/PXL_20250216_154624849.jpg)
 </details>
 <details>
 <summary>Solder usb port</summary>
+
 ![solder-usb-port](images/PXL_20250216_154654180.jpg)
 </details>
 <details>
 <summary>Back plate with rubber feet</summary>
+
 ![back-plate-with-rubber-feet](images/PXL_20250216_155243587.jpg)
 </details>
 <details>
 <summary>Front view with keycaps #1</summary>
+
 ![front-with-keycaps-1](images/PXL_20250216_155301028.jpg)
 </details>
 <details>
 <summary>Front view with keycaps #2</summary>
+
 ![front-with-keycaps-2](images/PXL_20250216_155312548.jpg)
 </details>
 <details>
 <summary>Comparison keyboard height with 18650 battery</summary>
+
 ![keyboard-height-compare-to-18650-battery](images/PXL_20250216_155413758.jpg)
 </details>

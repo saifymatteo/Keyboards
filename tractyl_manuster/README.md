@@ -157,25 +157,31 @@ Please see [QMK flashing](#flashing)
 
 <details>
 <summary>Left side</summary>
+
 ![slave-left-side](images/110c4cea-f8a7-48b2-a0ac-2569b0ca3a83.jpg)
 </details>
 <details>
 <summary>Right side</summary>
+
 ![master-right-side](images/40a449f4-e20b-490b-82b0-d6f21da3e662.jpg)
 </details>
 <details>
 <summary>Preview of non functioning</summary>
+
 ![both-side-non-functioning](images/PXL_20241107_162940886.jpg)
 </details>
 <details>
 <summary>PWM3360 overview, don't judge me</summary>
+
 ![master-pwm3360](images/PXL_20250831_062650070.MACRO_FOCUS.jpg)
 </details>
 <details>
 <summary>PWM3360 back side</summary>
+
 ![master-pwm3360-back-side](images/PXL_20250831_070929245.MACRO_FOCUS.jpg)
 </details>
 <details>
 <summary>My setup</summary>
+
 ![my-setup](images/PXL_20250117_034745872.jpg)
 </details>
