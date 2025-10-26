@@ -21,19 +21,15 @@ To view the whole case: [viewstl](https://www.viewstl.com/)
 `keymaps_tractyl_manuform.json` is a JSON representation of current configuration. This file need to be converted to C file and compile to `hex` before can be flash.
 
 <details>
-
 <summary>AVR Pro Micro MCU</summary>
 
 > Refer `promicro/KBPinouts.png` for right side pin layout and `promicro/wiring_left.png` for left. Both wiring are similar, so can refer left side.
-
 </details>
 
 <details>
-
 <summary>Generic RP2040</summary>
 
 > Refer `rp2040/tractyl_rp2040_pinout.pdf` for both left and right side pin layout.
-
 </details>
 
 ### Guide
@@ -91,7 +87,6 @@ To flash, use QMK Toolbox (for AVR) or drag-and-drop (for RP2040).
 To flash, choose based on your MCU:
 
 <details>
-
 <summary>AVR Pro Micro MCU</summary>
 
 > Set local file to `saifymatteo_tractyl_manuster_firmware_vial_promicro.hex` and MCU to `ATmega32U4`.
@@ -101,11 +96,9 @@ To flash, choose based on your MCU:
 > Once done, quickly press Flash.
 >
 > If need to clear EEPROM, double press reset switch and press Clear EEPROM.
-
 </details>
 
 <details>
-
 <summary>Generic RP2040</summary>
 
 > Refer `rp2040/tractyl_rp2040_pinout.pdf` for both left and right side pin layout.
@@ -113,7 +106,6 @@ To flash, choose based on your MCU:
 > Start flashing by shorting RUN and GND pin 2 times.
 >
 > Once done, you can proceed to use drag-and-drop the `saifymatteo_tractyl_manuster_firmware_rp2040_vial_rp2040.uf2` file to the RP2040 drive.
-
 </details>
 
 Note:
