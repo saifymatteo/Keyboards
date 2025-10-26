@@ -1,126 +1,158 @@
-# README
+# Tractyl Manuster
 
 Inspiration from [Schievel1](https://github.com/Schievel1/dactyl_manuform_r_track) and [noahprince22](https://github.com/noahprince22/tractyl-manuform-keyboard)
 
 Use these STL files from u/Tonehaven2 instead:
 
 - [left](https://gitlab.com/keyboards1/dm_left/-/blob/master/boolean/left.stl)
-
 - [right](https://gitlab.com/keyboards1/dm_r_track/-/blob/master/boolean/right.stl)
 
 To view the whole case: [viewstl](https://www.viewstl.com/)
 
 ## Hardware
 
-1. Pro Micro 2x for both left and right.
+1. Pro Micro 2x for both left and right (deprecated).
     1. On the trackball side, we will use pretty much all of the pin
     2. This is for only USB C Pro Micro
+2. RP2040 2x for both left and right.
 
 ## Getting Started
 
 `keymaps_tractyl_manuform.json` is a JSON representation of current configuration. This file need to be converted to C file and compile to `hex` before can be flash.
 
-Refer `KBPinouts.png` for right side pin layout and `wiring_left.png` for left. Both wiring are similar, so can refer left side
+<details>
 
-### Things to download
+<summary>AVR Pro Micro MCU</summary>
 
-Clone [saifymatteo/qmk_firmware](https://github.com/saifymatteo/qmk_firmware) to get started.
+Refer `promicro/KBPinouts.png` for right side pin layout and `promicro/wiring_left.png` for left. Both wiring are similar, so can refer left side.
 
-Use [QMK Configurator](https://config.qmk.fm) to setup custom keymaps
+</details>
 
-- Download only the JSON keymap, cannot use the compiled from here
+<details>
 
-Download [QMK Toolbox](https://github.com/qmk/qmk_toolbox) for flashing
+<summary>Generic RP2040</summary>
 
-Download CLI [QMK MSYS](https://msys.qmk.fm/) for compiling and converting JSON
+Refer `rp2040/tractyl_rp2040_pinout.pdf` for both left and right side pin layout.
+
+</details>
 
 ### Guide
 
-Start QMK MSYS CLI to start compiles
+This guide assumed you are already follow root `README.md`, specifically these:
 
-From here, ensure working directory is inside the `qmk_firmware` folder.
+1. Setup QMK and clone the repository
+2. Setup VS Code for C development
+3. Create symbolic link between this repository and QMK/Vial repository
 
-```bash
-cd D:/Git/qmk_firmware
-```
+The keyboard will be working on is in this directory `<path-to-qmk-repository>/keyboards/saifymatteo/tractyl_manuster/firmware`, with difference based on your MCU:
 
-Then you need to fetch the submodules, run this:
+- `promicro` and `keymaps/vial_promicro`
+- `rp2040` and `keymaps/vial_rp2040`
 
-```bash
-git submodule update --init --recursive
-```
+#### Convert JSON Keymap to `keymap.c`
 
-To confirm everything up to date, run:
-
-```bash
-qmk doctor
-```
-
-The keyboard will be working is in this directory `qmk_firmware/keyboards/handwired/tractyl_manuform`, specifically `5x6_right/promicro` and `5x6_right/keymaps/saifymatteo`
-
-Copy `keymaps_tractyl_manuform.json` to `qmk_firmware` folder and run next command to convert
+Copy `keymaps_tractyl_manuform.json` to `<path-to-qmk-repository>` folder and run next command to convert
 
 To convert keymap from JSON to C file, use this:
 
 ```bash
-qmk json2c keymaps_tractyl_manuform.json >> keyboards/handwired/tractyl_manuform/5x6_right/keymaps/saifymatteo/keymap.c
+# for AVR Pro Micro
+qmk json2c keymaps_tractyl_manuform.json >> keyboards/saifymatteo/tractyl_manuster/firmware/keymaps/vial_promicro/keymap.c
+
+# for RP2040
+qmk json2c keymaps_tractyl_manuform.json >> keyboards/saifymatteo/tractyl_manuster/firmware/keymaps/vial_rp2040/keymap.c
 ```
 
-Ensure key maps are valid in `5x6_right/keymaps/saifymatteo/keymap.c`
+Ensure key maps are valid in the generated `keymap.c`
 
-Now we can compile to flash
+Now we can compile to flash.
+
+### Compiles
 
 To compile keyboard and keymap:
 
 ```bash
-qmk compile -kb handwired/tractyl_manuform/5x6_right/promicro -km saifymatteo
+# for AVR Pro Micro
+qmk compile -kb saifymatteo/tractyl_manuster/firmware/promicro -km vial_promicro
+
+# for RP2040
+qmk compile -kb saifymatteo/tractyl_manuster/firmware/rp2040 -km vial_rp2040
 ```
 
 Note:
 
-- `-kb` is `5x6_right/promicro` keyboard config
-- `-km` is `5x6_right/saifymatteo` keyboard mapping
+- `-kb` is `saifymatteo/tractyl_manuster/firmware/promicro` keyboard config
+- `-km` is `vial_promicro` keyboard mapping
 
 ### Flashing
 
-To flash, use QMK Toolbox.
+To flash, use QMK Toolbox (for AVR) or drag-and-drop (for RP2040).
 
-Set local file to `\handwired_tractyl_manuform_5x6_right_promicro_saifymatteo.hex` and MCU to `ATmega32U4`
+To flash, choose based on your MCU:
+
+<details>
+
+<summary>AVR Pro Micro MCU</summary>
+
+Set local file to `saifymatteo_tractyl_manuster_firmware_vial_promicro.hex` and MCU to `ATmega32U4`.
 
 Start flashing by shorting RST and GND pin or press the reset switch on the back.
 
-Once done, quickly press Flash
+Once done, quickly press Flash.
+
+If need to clear EEPROM, double press reset switch and press Clear EEPROM.
+
+</details>
+
+<details>
+
+<summary>Generic RP2040</summary>
+
+Refer `rp2040/tractyl_rp2040_pinout.pdf` for both left and right side pin layout.
+
+Start flashing by shorting RUN and GND pin 2 times.
+
+Once done, you can proceed to use drag-and-drop the `saifymatteo_tractyl_manuster_firmware_rp2040_vial_rp2040.uf2` file to the RP2040 drive.
+
+</details>
 
 Note:
 
-- You need to flash both side with the same `hex` file
+- You need to flash both side with the same `hex` or `.uf2` file
 - Communication between each side will be automatic once flashed
-
-If need to clear EEPROM, double press reset switch and press Clear EEPROM
 
 ## VIAL
 
 Alternative to remap your keymap, no need to reflash everytime want to change keymap.
 
-Clone [saifymatteo/vial-qmk](https://github.com/saifymatteo/vial-qmk) to get started.
+Clone [vial-qmk](https://github.com/vial-kb/vial-qmk) to get started.
 
 Creating the flash file for VIAL enabled are similar with QMK, the difference is that VIAL use `make` instead `qmk compile`
 
 Ensure working directory in `vial-qmk` directory.
 
-```bash
-cd D:/Git/vial-qmk
-```
-
-Run this to compile to `hex` file
+Run this to compile to `hex` or `.uf2` file
 
 ```bash
-make handwired/tractyl_manuform/5x6_right/promicro:vial
+# for AVR Pro Micro
+make saifymatteo/tractyl_manuster/firmware/promicro:vial_promicro
+
+# for RP2040
+make saifymatteo/tractyl_manuster/firmware/rp2040:vial_rp2040
 ```
 
 ### VIAL Flashing
 
 Please see [QMK flashing](#flashing)
+
+## Images
+
+[slave-left-side](images/110c4cea-f8a7-48b2-a0ac-2569b0ca3a83.jpg)
+[master-right-side](images/40a449f4-e20b-490b-82b0-d6f21da3e662.jpg)
+[both-side-non-functioning](images/PXL_20241107_162940886.jpg)
+[master-pwm3360](images/PXL_20250831_062650070.MACRO_FOCUS.jpg)
+[master-pwm3360-back-side](images/PXL_20250831_070929245.MACRO_FOCUS.jpg)
+[my-setup](images/PXL_20250117_034745872.jpg)
 
 ## Other sources
 
