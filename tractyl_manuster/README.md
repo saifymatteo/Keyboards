@@ -24,7 +24,7 @@ To view the whole case: [viewstl](https://www.viewstl.com/)
 
 <summary>AVR Pro Micro MCU</summary>
 
-Refer `promicro/KBPinouts.png` for right side pin layout and `promicro/wiring_left.png` for left. Both wiring are similar, so can refer left side.
+> Refer `promicro/KBPinouts.png` for right side pin layout and `promicro/wiring_left.png` for left. Both wiring are similar, so can refer left side.
 
 </details>
 
@@ -32,7 +32,7 @@ Refer `promicro/KBPinouts.png` for right side pin layout and `promicro/wiring_le
 
 <summary>Generic RP2040</summary>
 
-Refer `rp2040/tractyl_rp2040_pinout.pdf` for both left and right side pin layout.
+> Refer `rp2040/tractyl_rp2040_pinout.pdf` for both left and right side pin layout.
 
 </details>
 
@@ -94,13 +94,13 @@ To flash, choose based on your MCU:
 
 <summary>AVR Pro Micro MCU</summary>
 
-Set local file to `saifymatteo_tractyl_manuster_firmware_vial_promicro.hex` and MCU to `ATmega32U4`.
-
-Start flashing by shorting RST and GND pin or press the reset switch on the back.
-
-Once done, quickly press Flash.
-
-If need to clear EEPROM, double press reset switch and press Clear EEPROM.
+> Set local file to `saifymatteo_tractyl_manuster_firmware_vial_promicro.hex` and MCU to `ATmega32U4`.
+>
+> Start flashing by shorting RST and GND pin or press the reset switch on the back.
+>
+> Once done, quickly press Flash.
+>
+> If need to clear EEPROM, double press reset switch and press Clear EEPROM.
 
 </details>
 
@@ -108,11 +108,11 @@ If need to clear EEPROM, double press reset switch and press Clear EEPROM.
 
 <summary>Generic RP2040</summary>
 
-Refer `rp2040/tractyl_rp2040_pinout.pdf` for both left and right side pin layout.
-
-Start flashing by shorting RUN and GND pin 2 times.
-
-Once done, you can proceed to use drag-and-drop the `saifymatteo_tractyl_manuster_firmware_rp2040_vial_rp2040.uf2` file to the RP2040 drive.
+> Refer `rp2040/tractyl_rp2040_pinout.pdf` for both left and right side pin layout.
+>
+> Start flashing by shorting RUN and GND pin 2 times.
+>
+> Once done, you can proceed to use drag-and-drop the `saifymatteo_tractyl_manuster_firmware_rp2040_vial_rp2040.uf2` file to the RP2040 drive.
 
 </details>
 
@@ -147,12 +147,12 @@ Please see [QMK flashing](#flashing)
 
 ## Images
 
-[slave-left-side](images/110c4cea-f8a7-48b2-a0ac-2569b0ca3a83.jpg)
-[master-right-side](images/40a449f4-e20b-490b-82b0-d6f21da3e662.jpg)
-[both-side-non-functioning](images/PXL_20241107_162940886.jpg)
-[master-pwm3360](images/PXL_20250831_062650070.MACRO_FOCUS.jpg)
-[master-pwm3360-back-side](images/PXL_20250831_070929245.MACRO_FOCUS.jpg)
-[my-setup](images/PXL_20250117_034745872.jpg)
+[!slave-left-side](images/110c4cea-f8a7-48b2-a0ac-2569b0ca3a83.jpg)
+[!master-right-side](images/40a449f4-e20b-490b-82b0-d6f21da3e662.jpg)
+[!both-side-non-functioning](images/PXL_20241107_162940886.jpg)
+[!master-pwm3360](images/PXL_20250831_062650070.MACRO_FOCUS.jpg)
+[!master-pwm3360-back-side](images/PXL_20250831_070929245.MACRO_FOCUS.jpg)
+[!my-setup](images/PXL_20250117_034745872.jpg)
 
 ## Other sources
 
