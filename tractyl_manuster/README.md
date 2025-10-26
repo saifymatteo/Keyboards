@@ -147,12 +147,12 @@ Please see [QMK flashing](#flashing)
 
 ## Images
 
-[!slave-left-side](images/110c4cea-f8a7-48b2-a0ac-2569b0ca3a83.jpg)
-[!master-right-side](images/40a449f4-e20b-490b-82b0-d6f21da3e662.jpg)
-[!both-side-non-functioning](images/PXL_20241107_162940886.jpg)
-[!master-pwm3360](images/PXL_20250831_062650070.MACRO_FOCUS.jpg)
-[!master-pwm3360-back-side](images/PXL_20250831_070929245.MACRO_FOCUS.jpg)
-[!my-setup](images/PXL_20250117_034745872.jpg)
+![slave-left-side](images/110c4cea-f8a7-48b2-a0ac-2569b0ca3a83.jpg)
+![master-right-side](images/40a449f4-e20b-490b-82b0-d6f21da3e662.jpg)
+![both-side-non-functioning](images/PXL_20241107_162940886.jpg)
+![master-pwm3360](images/PXL_20250831_062650070.MACRO_FOCUS.jpg)
+![master-pwm3360-back-side](images/PXL_20250831_070929245.MACRO_FOCUS.jpg)
+![my-setup](images/PXL_20250117_034745872.jpg)
 
 ## Other sources
 
