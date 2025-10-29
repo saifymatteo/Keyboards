@@ -12,7 +12,6 @@ DEFERRED_EXEC_ENABLE = yes
 
 # Audio
 AUDIO_ENABLE = yes
-AUDIO_DRIVER = pwm_hardware
 
 # Encoders
 ENCODER_ENABLE = yes
