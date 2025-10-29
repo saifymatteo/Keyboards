@@ -1,5 +1,5 @@
 /*
-Copyright 2025 saifymatteo
+Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 */
 
 #pragma once
@@ -49,3 +49,13 @@ Copyright 2025 saifymatteo
 // #define ENCODER_A_PINS {GP14}
 // #define ENCODER_B_PINS {GP15}
 // #define ENCODER_RESOLUTION 4
+
+// Save memory
+// #define NO_ACTION_ONESHOT
+// #define DISABLE_LEADER
+// #ifndef NO_DEBUG
+// #define NO_DEBUG
+// #endif // !NO_DEBUG
+// #if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
+// #define NO_PRINT
+// #endif // !NO_PRINT

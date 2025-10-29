@@ -1,4 +1,4 @@
-# Macropad
+# ViktorPad
 
 Custom 4x4 Macropad with Rotary Encoder and an OLED screen. Fully design by me.
 
@@ -22,19 +22,19 @@ This guide assumed you are already follow root `README.md`, specifically these:
 2. Setup VS Code for C development
 3. Create symbolic link between this repository and QMK/Vial repository
 
-The keyboard will be working on is in this directory `<path-to-qmk-repository>/keyboards/saifymatteo/macropad/firmware`.
+The keyboard will be working on is in this directory `<path-to-qmk-repository>/keyboards/saifymatteo/viktorpad/firmware`.
 
 ### Compiles
 
 To compile keyboard and keymap:
 
 ```bash
-qmk compile -kb saifymatteo/macropad/firmware -km vial_matteo
+qmk compile -kb saifymatteo/viktorpad/firmware -km vial_matteo
 ```
 
 Note:
 
-- `-kb` is `saifymatteo/macropad/firmware` keyboard config
+- `-kb` is `saifymatteo/viktorpad/firmware` keyboard config
 - `-km` is `vial_matteo` keyboard mapping
 
 ### Flashing
@@ -43,7 +43,7 @@ To flash, use QMK Toolbox.
 
 To flash, choose based on your MCU:
 
-Set local file to `saifymatteo_macropad_firmware_vial_matteo.hex` and MCU to `ATmega32U4`.
+Set local file to `saifymatteo_viktorpad_firmware_vial_matteo.hex` and MCU to `ATmega32U4`.
 
 Start flashing by shorting RST and GND pin or press the reset switch on the back.
 
@@ -64,7 +64,7 @@ Ensure working directory in `vial-qmk` directory.
 Run this to compile to `hex` file.
 
 ```bash
-make saifymatteo/macropad/firmware:vial_matteo
+make saifymatteo/viktorpad/firmware:vial_matteo
 ```
 
 ### VIAL Flashing
