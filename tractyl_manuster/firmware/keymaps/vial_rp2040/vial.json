@@ -1,155 +1,212 @@
 {
-  "lighting": "none",
-  "matrix": {
-    "rows": 12,
-    "cols": 6
-  },
-  "layouts": {
-    "keymap": [
-      [
-        "0,0",
-        "0,1",
-        "0,2",
-        "0,3",
-        "0,4",
-        "0,5",
-        "0,0\n\n\n\n\n\n\n\n\ne",
-        "0,1\n\n\n\n\n\n\n\n\ne"
-      ],
-      [
-        "1,0",
-        "1,1",
-        "1,2",
-        "1,3",
-        "1,4",
-        "1,5",
+    "lighting": "none",
+    "matrix": {
+        "rows": 12,
+        "cols": 6
+    },
+    "customKeycodes": [
         {
-          "x": 0.5
+            "name": "POINTER_DEFAULT_DPI_FORWARD",
+            "title": "Trackball Default DPI Forward",
+            "shortName": "Mouse\nDefault\nDPI +"
         },
-        "4,1"
-      ],
-      [
-        "2,0",
-        "2,1",
-        "2,2",
-        "2,3",
-        "2,4",
-        "2,5"
-      ],
-      [
-        "3,0",
-        "3,1",
-        "3,2",
-        "3,3",
-        "3,4",
-        "3,5"
-      ],
-      [
         {
-          "x": 10,
-          "y": -4
+            "name": "POINTER_DEFAULT_DPI_REVERSE",
+            "title": "Trackball Default DPI Reverse",
+            "shortName": "Mouse\nDefault\nDPI -"
         },
-        "1,0\n\n\n\n\n\n\n\n\ne",
-        "1,1\n\n\n\n\n\n\n\n\ne",
-        "6,0",
-        "6,1",
-        "6,2",
-        "6,3",
-        "6,4",
-        "6,5"
-      ],
-      [
         {
-          "x": 10.5
+            "name": "POINTER_SNIPING_DPI_FORWARD",
+            "title": "Trackball Sniping DIP Forward",
+            "shortName": "Mouse\nSnipe\nDPI +"
         },
-        "10,4",
         {
-          "x": 0.5
+            "name": "POINTER_SNIPING_DPI_REVERSE",
+            "title": "Trackball Sniping DIP Reverse",
+            "shortName": "Mouse\nSnipe\nDPI -"
         },
-        "7,0",
-        "7,1",
-        "7,2",
-        "7,3",
-        "7,4",
-        "7,5"
-      ],
-      [
         {
-          "x": 12
+            "name": "SNIPING_MODE",
+            "title": "Trackball Sniping Mode",
+            "shortName": "Mouse\nSnipe"
         },
-        "8,0",
-        "8,1",
-        "8,2",
-        "8,3",
-        "8,4",
-        "8,5"
-      ],
-      [
         {
-          "x": 12
+            "name": "SNIPING_MODE_TOGGLE",
+            "title": "Trackball Sniping Mode Toggle",
+            "shortName": "Mouse\nSnipe\nToggle"
         },
-        "9,0",
-        "9,1",
-        "9,2",
-        "9,3",
-        "9,4",
-        "9,5"
-      ],
-      [
         {
-          "x": 2
+            "name": "DRAGSCROLL_MODE",
+            "title": "Trackball Dragscroll Mode",
+            "shortName": "Mouse\nScroll"
         },
-        "4,2",
-        "4,3"
-      ],
-      [
         {
-          "x": 4
+            "name": "DRAGSCROLL_MODE_TOGGLE",
+            "title": "Trackball Dragscroll Mode Toggle",
+            "shortName": "Mouse\nScroll\nToggle"
         },
-        "4,4",
-        "4,5"
-      ],
-      [
         {
-          "x": 6
+            "name": "ALT_GUI_KC",
+            "title": "Alt GUI Keycode",
+            "shortName": "Alt\nGUI"
         },
-        "5,5",
-        "5,3"
-      ],
-      [
         {
-          "x": 6
+            "name": "ZOOM_KC",
+            "title": "Zoom Keycode",
+            "shortName": "Zoom"
         },
-        "5,4",
-        "5,2"
-      ],
-      [
         {
-          "x": 14,
-          "y": -4
-        },
-        "10,2",
-        "10,3"
-      ],
-      [
-        {
-          "x": 13
-        },
-        "10,1"
-      ],
-      [
-        {
-          "x": 10
-        },
-        "11,2"
-      ],
-      [
-        {
-          "x": 10
-        },
-        "11,3",
-        "11,1"
-      ]
-    ]
-  }
+            "name": "TL_DEBUG_KC",
+            "title": "Toggle Debug Mode Keycode",
+            "shortName": "Debug\nToggle"
+        }
+    ],
+    "layouts": {
+        "keymap": [
+            [
+                "0,0",
+                "0,1",
+                "0,2",
+                "0,3",
+                "0,4",
+                "0,5",
+                "0,0\n\n\n\n\n\n\n\n\ne",
+                "0,1\n\n\n\n\n\n\n\n\ne"
+            ],
+            [
+                "1,0",
+                "1,1",
+                "1,2",
+                "1,3",
+                "1,4",
+                "1,5",
+                {
+                    "x": 0.5
+                },
+                "4,1"
+            ],
+            [
+                "2,0",
+                "2,1",
+                "2,2",
+                "2,3",
+                "2,4",
+                "2,5"
+            ],
+            [
+                "3,0",
+                "3,1",
+                "3,2",
+                "3,3",
+                "3,4",
+                "3,5"
+            ],
+            [
+                {
+                    "x": 10,
+                    "y": -4
+                },
+                "1,0\n\n\n\n\n\n\n\n\ne",
+                "1,1\n\n\n\n\n\n\n\n\ne",
+                "6,0",
+                "6,1",
+                "6,2",
+                "6,3",
+                "6,4",
+                "6,5"
+            ],
+            [
+                {
+                    "x": 10.5
+                },
+                "10,4",
+                {
+                    "x": 0.5
+                },
+                "7,0",
+                "7,1",
+                "7,2",
+                "7,3",
+                "7,4",
+                "7,5"
+            ],
+            [
+                {
+                    "x": 12
+                },
+                "8,0",
+                "8,1",
+                "8,2",
+                "8,3",
+                "8,4",
+                "8,5"
+            ],
+            [
+                {
+                    "x": 12
+                },
+                "9,0",
+                "9,1",
+                "9,2",
+                "9,3",
+                "9,4",
+                "9,5"
+            ],
+            [
+                {
+                    "x": 2
+                },
+                "4,2",
+                "4,3"
+            ],
+            [
+                {
+                    "x": 4
+                },
+                "4,4",
+                "4,5"
+            ],
+            [
+                {
+                    "x": 6
+                },
+                "5,5",
+                "5,3"
+            ],
+            [
+                {
+                    "x": 6
+                },
+                "5,4",
+                "5,2"
+            ],
+            [
+                {
+                    "x": 14,
+                    "y": -4
+                },
+                "10,2",
+                "10,3"
+            ],
+            [
+                {
+                    "x": 13
+                },
+                "10,1"
+            ],
+            [
+                {
+                    "x": 10
+                },
+                "11,2"
+            ],
+            [
+                {
+                    "x": 10
+                },
+                "11,3",
+                "11,1"
+            ]
+        ]
+    }
 }

@@ -65,9 +65,9 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 // Trackball settings
 #define CHARYBDIS_MINIMUM_DEFAULT_DPI 1000 // The minimum sensitivity in default mode.
-// #define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200 // Change of the sensitivity in cursor mode each time POINTER_DEFAULT_DPI_FORWARD/ REVERSE is pressed.
+#define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200 // Change of the sensitivity in cursor mode each time POINTER_DEFAULT_DPI_FORWARD/ REVERSE is pressed.
 #define CHARYBDIS_MINIMUM_SNIPING_DPI 400 // The sensitivity in sniping mode.
-// #define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 200 // Change of the pointers sensitivity in sniping mode each time POINTER_SNIPING_DPI_FORWARD/ REVERSE is pressed.
+#define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 100 // Change of the pointers sensitivity in sniping mode each time POINTER_SNIPING_DPI_FORWARD/ REVERSE is pressed.
 #define CHARYBDIS_DRAGSCROLL_DPI 100 // The sensitivity in dragscroll mode.
 // #define CHARYBDIS_DRAGSCROLL_REVERSE_X // Reverse the scroll direction in dragscroll mode for the x / y axis.
 #define CHARYBDIS_DRAGSCROLL_REVERSE_Y // Reverse the scroll direction in dragscroll mode for the x / y axis.

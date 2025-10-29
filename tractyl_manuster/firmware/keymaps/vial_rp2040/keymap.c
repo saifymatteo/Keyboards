@@ -44,24 +44,35 @@ const char *translate_keycode_string(uint16_t keycode) {
     switch (keycode) {
         case SNIPING_MODE:
             return "SNIPING";
+        case SNIPING_MODE_TOGGLE:
+            return "SNIPING_TOGG";
         case DRAGSCROLL_MODE:
             return "DRAGSCROLL";
+        case DRAGSCROLL_MODE_TOGGLE:
+            return "DRAGSCROLL_TG";
         default:
             return get_keycode_string(keycode);
     }
 }
 
 enum custom_keycodes {
-    ALT_GUI = SAFE_RANGE,
-    ZOOM,
+    // QK_KB_0 is reserved for Trackball enum (8 keys)
+    ALT_GUI_KC = QK_KB_8,
+    ZOOM_KC,
+    TL_DEBUG_KC,
 };
 
-KEYCODE_STRING_NAMES_USER(KEYCODE_STRING_NAME(ALT_GUI), KEYCODE_STRING_NAME(ZOOM), KEYCODE_STRING_NAME(KC_APP), KEYCODE_STRING_NAME(SNIPING_MODE), KEYCODE_STRING_NAME(DRAGSCROLL_MODE));
+KEYCODE_STRING_NAMES_USER(            //
+    KEYCODE_STRING_NAME(ALT_GUI_KC),  //
+    KEYCODE_STRING_NAME(ZOOM_KC),     //
+    KEYCODE_STRING_NAME(KC_APP),      //
+    KEYCODE_STRING_NAME(TL_DEBUG_KC), //
+);
 
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {[0] = LAYOUT_with_encoder(KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_DEL, KC_TAB, KC_Q, KC_W, KC_F, KC_P, KC_B, KC_J, KC_L, KC_U, KC_Y, KC_SCLN, KC_BSLS, KC_BSPC, KC_A, KC_R, KC_S, KC_T, KC_G, KC_M, KC_N, KC_E, KC_I, KC_O, KC_QUOT, KC_APP, KC_Z, KC_X, KC_C, KC_D, KC_V, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, DF(1), ALT_GUI, KC_LCTL, KC_LGUI, KC_HOME, KC_END, ZOOM, KC_LSFT, KC_SPC, RSFT_T(KC_SPC), KC_ENT, KC_LALT, RALT_T(KC_ENT), TT(2), TT(3), TT(3), TT(2)),
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {[0] = LAYOUT_with_encoder(KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_DEL, KC_TAB, KC_Q, KC_W, KC_F, KC_P, KC_B, KC_J, KC_L, KC_U, KC_Y, KC_SCLN, KC_BSLS, KC_BSPC, KC_A, KC_R, KC_S, KC_T, KC_G, KC_M, KC_N, KC_E, KC_I, KC_O, KC_QUOT, KC_APP, KC_Z, KC_X, KC_C, KC_D, KC_V, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, DF(1), ALT_GUI_KC, KC_LCTL, KC_LGUI, KC_HOME, KC_END, ZOOM_KC, KC_LSFT, KC_SPC, RSFT_T(KC_SPC), KC_ENT, KC_LALT, RALT_T(KC_ENT), TT(2), TT(3), TT(3), TT(2)),
                                                               [1] = LAYOUT_with_encoder(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_TRNS, KC_TRNS, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_TRNS, KC_TRNS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, DF(0), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
-                                                              [2] = LAYOUT_with_encoder(QK_REBOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_TRNS, KC_GRV, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_TRNS, KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, KC_TRNS, ALT_GUI, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS, EE_CLR, KC_F9, KC_F10, KC_F11, KC_F12, AU_TOGG, KC_TILD, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, DB_TOGG, KC_MUTE, KC_TRNS, KC_TRNS, KC_PGUP, KC_PGDN, KC_MEDIA_PLAY_PAUSE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
-                                                              [3] = LAYOUT_with_encoder(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MS_BTN4, MS_BTN5, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, SNIPING_MODE, DRAGSCROLL_MODE, KC_TRNS, KC_TRNS, MS_BTN1, MS_BTN3, MS_BTN2, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LCTL(KC_A), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)};
+                                                              [2] = LAYOUT_with_encoder(QK_REBOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_TRNS, KC_GRV, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_TRNS, KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, KC_TRNS, ALT_GUI_KC, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS, EE_CLR, KC_F9, KC_F10, KC_F11, KC_F12, AU_TOGG, KC_TILD, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, TL_DEBUG_KC, KC_MUTE, KC_TRNS, KC_TRNS, KC_PGUP, KC_PGDN, KC_MEDIA_PLAY_PAUSE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+                                                              [3] = LAYOUT_with_encoder(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MS_BTN4, MS_BTN5, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, SNIPING_MODE, DRAGSCROLL_MODE, KC_TRNS, KC_TRNS, MS_BTN1, MS_BTN3, MS_BTN2, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, SNIPING_MODE_TOGGLE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, DRAGSCROLL_MODE_TOGGLE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)};
 
 // ---------------- ENCODER --------------------------------------------------------------
 
@@ -172,22 +183,22 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             }
             break;
         case 3:
-            // Move cursor one word left / right || Page up / page down
+            // Trackball Default DPI Forward/Reverse || Trackball Sniping DPI Forward/Reverse
             if (is_slave_left) {
                 if (clockwise) {
-                    tap_code16(current_os == OS_MACOS ? LALT(KC_RIGHT) : LCTL(KC_RIGHT));
-                    oled_write_ln("RE_WORD", false);
+                    charybdis_cycle_pointer_default_dpi(true);
+                    oled_write_ln("RE_DEF_DPI+", false);
                 } else {
-                    tap_code16(current_os == OS_MACOS ? LALT(KC_LEFT) : LCTL(KC_LEFT));
-                    oled_write_ln("RE_WORD", false);
+                    charybdis_cycle_pointer_default_dpi(false);
+                    oled_write_ln("RE_DEF_DPI-", false);
                 }
             } else if (is_master_right) {
                 if (clockwise) {
-                    tap_code(KC_PAGE_UP);
-                    oled_write_ln("RE_PAGE_UP", false);
+                    charybdis_cycle_pointer_sniping_dpi(true);
+                    oled_write_ln("RE_SNI_DPI+", false);
                 } else {
-                    tap_code(KC_PAGE_DOWN);
-                    oled_write_ln("RE_PAGE_DW", false);
+                    charybdis_cycle_pointer_sniping_dpi(false);
+                    oled_write_ln("RE_SNI_DPI-", false);
                 }
             }
             break;
@@ -209,6 +220,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 // WPM and row/column texts
 char text_wpm[10];
 char text_row_col[13];
+
+// DPI Status text
+char text_dpi[30];
 
 // Keyboard Matrix display
 #define MATRIX_DISPLAY_X 36
@@ -324,9 +338,11 @@ bool oled_task_user(void) {
         } else if (state.kana) {
             oled_write_ln("Kana", false);
         } else {
+            // Render DPI Setting when idle
             if (timer_elapsed(keycode_timer) > 1000) {
+                sprintf(text_dpi, "DPI: DEF%d-SNI%d", charybdis_get_pointer_default_dpi(), charybdis_get_pointer_sniping_dpi());
                 oled_set_cursor(0, 3);
-                oled_advance_page(true);
+                oled_write_ln(text_dpi, false);
             }
         }
     } else {
@@ -402,7 +418,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
-        case ALT_GUI:
+        case ALT_GUI_KC:
             if (record->event.pressed) {
                 if (current_os == OS_WINDOWS || current_os == OS_LINUX) {
                     // Windows | Open Task View
@@ -413,7 +429,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case ZOOM:
+        case ZOOM_KC:
             if (record->event.pressed) {
                 if (current_os == OS_WINDOWS) {
                     // Windows | Cancel Magnifier
@@ -426,6 +442,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code16(LCA(KC_8));
                 }
             }
+            break;
     }
     return true;
 };
