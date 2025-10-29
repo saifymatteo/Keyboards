@@ -40,6 +40,9 @@ bool should_process_keypress(void) {
 // Clear keycode timer;
 uint16_t keycode_timer = 0;
 
+// DPI text
+char text_dpi[15];
+
 const char *translate_keycode_string(uint16_t keycode) {
     switch (keycode) {
         case SNIPING_MODE:
@@ -117,7 +120,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     switch (get_highest_layer(layer_state | default_layer_state)) {
         case 0:
         case 1:
-            // Alt tab / shift alt tab || OS zoom in / out
+            // Alt tab / shift alt tab
             if (is_slave_left) {
                 // Windows: Alt tab (need to hold alt)
                 // MacOS: Command tab (need to hold command)
@@ -128,16 +131,18 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                     }
                     alt_tab_timer = timer_read();
                     tap_code(KC_TAB);
-                    oled_write_ln("RE_ALT_GUI", false);
+                    oled_write_ln("RE_ALT_GUI+", false);
                 } else {
                     if (!is_alt_shift_tab_active) {
                         is_alt_shift_tab_active = true;
                     }
                     alt_tab_timer = timer_read();
                     tap_code16(LSFT(KC_TAB));
-                    oled_write_ln("RE_ALT_GUI", false);
+                    oled_write_ln("RE_ALT_GUI-", false);
                 }
-            } else if (is_master_right) {
+            }
+            // OS zoom in / out
+            else if (is_master_right) {
                 // Windows: Magnifier - Windows plus/minus sign
                 // MacOS: Zoom - Option (Alt) Command plus/minus sign | Need to enable "Use keyboard shortcuts to zoom"
                 // Linux: Zoom (Gnome) - Super Alt plus/minus sign
@@ -149,7 +154,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                     } else if (current_os == OS_MACOS) {
                         tap_code16(LCA(KC_KP_PLUS));
                     }
-                    oled_write_ln("RE_ZOOM", false);
+                    oled_write_ln("RE_ZOOM+", false);
                 } else {
                     if (current_os == OS_WINDOWS) {
                         tap_code16(LGUI(KC_KP_MINUS));
@@ -158,48 +163,53 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                     } else if (current_os == OS_MACOS) {
                         tap_code16(LCA(KC_KP_MINUS));
                     }
-                    oled_write_ln("RE_ZOOM", false);
+                    oled_write_ln("RE_ZOOM-", false);
                 }
             }
             break;
         case 2:
-            // Volume up / down || Media Previous / Media Next
+            // Volume up / down
             if (is_slave_left) {
                 if (clockwise) {
                     tap_code(KC_VOLU);
-                    oled_write_ln("RE_VOLU", false);
+                    oled_write_ln("RE_VOL+", false);
                 } else {
                     tap_code(KC_VOLD);
-                    oled_write_ln("RE_VOLD", false);
+                    oled_write_ln("RE_VOL-", false);
                 }
-            } else if (is_master_right) {
+            }
+            // Media Previous / Media Next
+            else if (is_master_right) {
                 if (clockwise) {
                     tap_code(KC_MEDIA_NEXT_TRACK);
-                    oled_write_ln("RE_MEDIA", false);
+                    oled_write_ln("RE_MEDIA+", false);
                 } else {
                     tap_code(KC_MEDIA_PREV_TRACK);
-                    oled_write_ln("RE_MEDIA", false);
+                    oled_write_ln("RE_MEDIA-", false);
                 }
             }
             break;
         case 3:
-            // Trackball Default DPI Forward/Reverse || Trackball Sniping DPI Forward/Reverse
+            // Trackball Default DPI Forward/Reverse
             if (is_slave_left) {
                 if (clockwise) {
+                    // "DPI: DEF1000"
                     charybdis_cycle_pointer_default_dpi(true);
-                    oled_write_ln("RE_DEF_DPI+", false);
                 } else {
                     charybdis_cycle_pointer_default_dpi(false);
-                    oled_write_ln("RE_DEF_DPI-", false);
                 }
-            } else if (is_master_right) {
+                sprintf(text_dpi, "DPI: D-%d", charybdis_get_pointer_default_dpi());
+                oled_write_ln(text_dpi, false);
+            }
+            // Trackball Sniping DPI Forward/Reverse
+            else if (is_master_right) {
                 if (clockwise) {
                     charybdis_cycle_pointer_sniping_dpi(true);
-                    oled_write_ln("RE_SNI_DPI+", false);
                 } else {
                     charybdis_cycle_pointer_sniping_dpi(false);
-                    oled_write_ln("RE_SNI_DPI-", false);
                 }
+                sprintf(text_dpi, "DPI: S-%d", charybdis_get_pointer_sniping_dpi());
+                oled_write_ln(text_dpi, false);
             }
             break;
     }
@@ -220,9 +230,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 // WPM and row/column texts
 char text_wpm[10];
 char text_row_col[13];
-
-// DPI Status text
-char text_dpi[30];
 
 // Keyboard Matrix display
 #define MATRIX_DISPLAY_X 36
@@ -340,9 +347,8 @@ bool oled_task_user(void) {
         } else {
             // Render DPI Setting when idle
             if (timer_elapsed(keycode_timer) > 1000) {
-                sprintf(text_dpi, "DPI: DEF%d-SNI%d", charybdis_get_pointer_default_dpi(), charybdis_get_pointer_sniping_dpi());
                 oled_set_cursor(0, 3);
-                oled_write_ln(text_dpi, false);
+                oled_advance_page(true);
             }
         }
     } else {
