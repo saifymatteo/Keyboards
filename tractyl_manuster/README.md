@@ -11,10 +11,14 @@ To view the whole case: [viewstl](https://www.viewstl.com/)
 
 ## Hardware
 
-1. Pro Micro 2x for both left and right (deprecated).
-    1. On the trackball side, we will use pretty much all of the pin
-    2. This is for only USB C Pro Micro
-2. RP2040 2x for both left and right.
+1. Pro Micro 2x USB C (deprecated).
+    1. PWM3360 Sensor
+2. Generic RP2040 2x.
+    1. PWM3360 Sensor
+    2. EC11 Rotary Encoder
+    3. OLED 128x36 i2C
+    4. Passive Piezo Buzzer
+    5. Coin Vibration Motor
 
 ## Getting Started
 

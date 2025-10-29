@@ -9,6 +9,9 @@ To view the whole case: [viewstl](https://www.viewstl.com/)
 ## Hardware
 
 1. Teensy++ 2.0 with (AT90USB1286)
+2. EC11 Rotary Encoder
+3. OLED 128x36 i2C
+4. Passive Piezo Buzzer
 
 ## Getting Started
 
