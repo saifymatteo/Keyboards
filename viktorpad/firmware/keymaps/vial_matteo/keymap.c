@@ -9,30 +9,20 @@
 #    include "keymap.h"
 #endif
 
-// INITIALISATION --------------------------------------------------------------
-
-void keyboard_post_init_user(void) {
-    // Enable console debug
-    debug_enable = true;
-    // debug_matrix = true;
-    // debug_keyboard = true;
-    // debug_mouse = true;
-}
-
 // LAYER --------------------------------------------------------------
 
 // Clear keycode timer;
 uint16_t keycode_timer = 0;
 
 enum custom_keycodes {
-    ALT_GUI = SAFE_RANGE,
+    ALT_GUI_KC = SAFE_RANGE,
 };
 
-KEYCODE_STRING_NAMES_USER(        //
-    KEYCODE_STRING_NAME(ALT_GUI), //
-    KEYCODE_STRING_NAME(KC_APP),  //
-    KEYCODE_STRING_NAME(KC_MUTE), //
-    KEYCODE_STRING_NAME(DB_TOGG)  //
+KEYCODE_STRING_NAMES_USER(           //
+    KEYCODE_STRING_NAME(ALT_GUI_KC), //
+    KEYCODE_STRING_NAME(KC_APP),     //
+    KEYCODE_STRING_NAME(KC_MUTE),    //
+    KEYCODE_STRING_NAME(DB_TOGG)     //
 );
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = //
@@ -75,64 +65,64 @@ bool     is_alt_tab_active       = false;
 bool     is_alt_shift_tab_active = false;
 uint16_t alt_tab_timer           = 0;
 
-// Note: disable ENCODER_MAP_ENABLE for custom encoder handling
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    os_variant_t current_os = detected_host_os();
+// // Note: disable ENCODER_MAP_ENABLE for custom encoder handling
+// bool encoder_update_user(uint8_t index, bool clockwise) {
+//     os_variant_t current_os = detected_host_os();
 
-    // Update keycode timer
-    keycode_timer = timer_read();
+//     // Update keycode timer
+//     keycode_timer = timer_read();
 
-    // Set matrix for Rotary rotation
-    oled_set_cursor(0, 3);
+//     // Set matrix for Rotary rotation
+//     oled_set_cursor(0, 3);
 
-    if (clockwise) {
-        oled_write_ln("--RE->", false);
-        print("Encoder: clockwise\n");
-    } else {
-        oled_write_ln("<-RE--", false);
-        print("Encoder: counter clockwise\n");
-    }
+//     if (clockwise) {
+//         oled_write_ln("--RE->", false);
+//         // print("Encoder: clockwise\n");
+//     } else {
+//         oled_write_ln("<-RE--", false);
+//         // print("Encoder: counter clockwise\n");
+//     }
 
-    // Set keycode for Rotary rotation
-    oled_set_cursor(8, 3);
+//     // Set keycode for Rotary rotation
+//     oled_set_cursor(8, 3);
 
-    switch (get_highest_layer(layer_state | default_layer_state)) {
-        case 0:
-        case 1:
-            // Alt tab / shift alt tab
-            // Windows: Alt tab (need to hold alt)
-            // MacOS: Command tab (need to hold command)
-            register_code(current_os == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
-            if (clockwise) {
-                if (!is_alt_tab_active) {
-                    is_alt_tab_active = true;
-                }
-                alt_tab_timer = timer_read();
-                tap_code(KC_TAB);
-                oled_write_ln("RE_ALT_GUI", false);
-            } else {
-                if (!is_alt_shift_tab_active) {
-                    is_alt_shift_tab_active = true;
-                }
-                alt_tab_timer = timer_read();
-                tap_code16(LSFT(KC_TAB));
-                oled_write_ln("RE_ALT_GUI", false);
-            }
-            break;
-        case 2:
-            // Volume up / down
-            if (clockwise) {
-                tap_code(KC_VOLU);
-                oled_write_ln("RE_VOLU", false);
-            } else {
-                tap_code(KC_VOLD);
-                oled_write_ln("RE_VOLD", false);
-            }
-            break;
-    }
+//     switch (get_highest_layer(layer_state | default_layer_state)) {
+//         case 0:
+//         case 1:
+//             // Alt tab / shift alt tab
+//             // Windows: Alt tab (need to hold alt)
+//             // MacOS: Command tab (need to hold command)
+//             register_code(current_os == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
+//             if (clockwise) {
+//                 if (!is_alt_tab_active) {
+//                     is_alt_tab_active = true;
+//                 }
+//                 alt_tab_timer = timer_read();
+//                 tap_code(KC_TAB);
+//                 oled_write_ln("RE_ALT_GUI_KC", false);
+//             } else {
+//                 if (!is_alt_shift_tab_active) {
+//                     is_alt_shift_tab_active = true;
+//                 }
+//                 alt_tab_timer = timer_read();
+//                 tap_code16(LSFT(KC_TAB));
+//                 oled_write_ln("RE_ALT_GUI_KC", false);
+//             }
+//             break;
+//         case 2:
+//             // Volume up / down
+//             if (clockwise) {
+//                 tap_code(KC_VOLU);
+//                 oled_write_ln("RE_VOLU", false);
+//             } else {
+//                 tap_code(KC_VOLD);
+//                 oled_write_ln("RE_VOLD", false);
+//             }
+//             break;
+//     }
 
-    return false;
-}
+//     return false;
+// }
 
 // OLED --------------------------------------------------------------
 
@@ -147,12 +137,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 // 3. Convert from Gif.
 // [github](https://github.com/AskMeAboutBirds/qmk-oled-animation-compressor)
 
-// WPM and row/column texts
-char text_wpm[10];
-char text_row_col[13];
-
 // Keyboard Matrix display
-#define MATRIX_DISPLAY_X 36
+#define MATRIX_DISPLAY_X 20
 #define MATRIX_DISPLAY_Y 18
 
 // Keyboard Unit size
@@ -213,11 +199,6 @@ bool oled_task_user(void) {
             oled_write_pixel(MATRIX_DISPLAY_X, y, true);
         }
 
-        // Render WPM text
-        oled_set_cursor(8, 0);
-        sprintf(text_wpm, "WPM: %03d", get_current_wpm());
-        oled_write_ln(text_wpm, false);
-
         // Render OS
         oled_set_cursor(8, 1);
         switch (detected_host_os()) {
@@ -254,26 +235,9 @@ bool oled_task_user(void) {
                 oled_write_ln("Undefined", false);
         }
 
-        // Render keyboard state
-        // else,
-        // Clear keycodes text (Row/Column + Keycodes)
-        led_t state = host_keyboard_led_state();
-        oled_set_cursor(8, 3);
-        if (state.caps_lock) {
-            oled_write_ln("Caps Lock", false);
-        } else if (state.num_lock) {
-            oled_write_ln("Num Lock", false);
-        } else if (state.scroll_lock) {
-            oled_write_ln("Scroll Lck", false);
-        } else if (state.compose) {
-            oled_write_ln("Compose", false);
-        } else if (state.kana) {
-            oled_write_ln("Kana", false);
-        } else {
-            if (timer_elapsed(keycode_timer) > 1000) {
-                oled_set_cursor(0, 3);
-                oled_advance_page(true);
-            }
+        if (timer_elapsed(keycode_timer) > 1000) {
+            oled_set_cursor(0, 3);
+            oled_advance_page(true);
         }
     }
 
@@ -282,26 +246,6 @@ bool oled_task_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     os_variant_t current_os = detected_host_os();
-
-    // Debug keycodes
-    printf("Key: %s\n", get_keycode_string(keycode));
-    switch (current_os) {
-        case OS_LINUX:
-            printf("OS: Linux\n");
-            break;
-        case OS_WINDOWS:
-            printf("OS: Windows\n");
-            break;
-        case OS_MACOS:
-            printf("OS: MacOS\n");
-            break;
-        case OS_IOS:
-            printf("OS: iOS\n");
-            break;
-        case OS_UNSURE:
-            printf("OS: Unsure\n");
-            break;
-    }
 
     uint8_t current_layer = get_highest_layer(layer_state | default_layer_state);
     if (current_layer != 1) {
@@ -312,16 +256,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         uint8_t column = record->event.key.col;
 
         // Render Row and Column text
-        sprintf(text_row_col, "R%02d-C%d", row, column);
         oled_set_cursor(0, 3);
-        oled_write_ln(text_row_col, false);
+        oled_write_P(PSTR("R"), false);
+        oled_write(get_u8_str(row, '0'), false);
+        oled_write_P(PSTR("-C"), false);
+        oled_write_ln(get_u8_str(column, ' '), false);
 
         // Render current key name
         oled_set_cursor(8, 3);
         oled_write_ln(get_keycode_string(keycode), false);
-
-        // Update timer
-        keycode_timer = timer_read();
 
         // Render keyboard tap, switch back the row/column on master side
         for (uint8_t x = (CUBE_NUMBER * row) + GAP; x < CUBE_NUMBER * (row + 1); x++) {
@@ -331,8 +274,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
     }
 
+    // Update timer
+    keycode_timer = timer_read();
+
     switch (keycode) {
-        case ALT_GUI:
+        case ALT_GUI_KC:
             if (record->event.pressed) {
                 if (current_os == OS_WINDOWS || current_os == OS_LINUX) {
                     // Windows | Open Task View

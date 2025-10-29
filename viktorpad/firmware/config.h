@@ -4,32 +4,11 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 #pragma once
 
-// Save memory
-#define LAYER_STATE_16BIT
-
 // Dynamic Keymap
 #define DYNAMIC_KEYMAP_LAYER_COUNT 3
 
 // For OS Detection | helps with detection issue with KVM device
 #define OS_DETECTION_KEYBOARD_RESET
-
-// Tapping Toggle feature TT(layer)
-#define TAPPING_TOGGLE 3
-
-// Deferred Callbacks
-#define MAX_DEFERRED_EXECUTORS 16
-
-// Audio features
-#define AUDIO_PIN C6 // Pin for audio output
-#define AUDIO_INIT_DELAY
-
-// Audio Song
-#define STARTUP_SONG SONG(USSR_ANTHEM)
-#define NO_MUSIC_MODE
-
-// Audio Clicky | Keypress Sound
-#define AUDIO_CLICKY
-#define AUDIO_CLICKY_FREQ_RANDOMNESS 1.0f
 
 // I2C configuration (for OLED)
 #define I2C1_SCL_PIN D0
@@ -46,11 +25,14 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 #define ENCODER_RESOLUTION 4
 
 // Save memory
-// #define NO_ACTION_ONESHOT
-// #define DISABLE_LEADER
-// #ifndef NO_DEBUG
-// #define NO_DEBUG
-// #endif // !NO_DEBUG
-// #if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
-// #define NO_PRINT
-// #endif // !NO_PRINT
+#define LAYER_STATE_8BIT
+#undef LOCKING_SUPPORT_ENABLE
+#undef LOCKING_RESYNC_ENABLE
+#define NO_ACTION_ONESHOT
+#define DISABLE_LEADER
+#ifndef NO_DEBUG
+#define NO_DEBUG
+#endif // !NO_DEBUG
+#if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
+#define NO_PRINT
+#endif // !NO_PRINT
