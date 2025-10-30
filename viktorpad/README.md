@@ -4,6 +4,14 @@ Custom 4x4 Macropad with Rotary Encoder and an OLED screen. Fully design by me.
 
 To view the whole case: [viewstl](https://www.viewstl.com/)
 
+## Version
+
+1. `v1`
+    - 4x4 keys with 3 encoders and 1 OLED
+    - dimension 16cm x 8.63cm
+2. `v2`
+    - 3x4 keys with 3 encoders and 1 OLED
+
 ## Hardware
 
 1. Pro Micro
