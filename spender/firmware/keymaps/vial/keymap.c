@@ -11,12 +11,34 @@
 
 // ---------------- INITIALISATION --------------------------------------------------------------
 
+typedef union {
+    uint32_t raw;
+    struct {
+        uint32_t tapping_term;
+    };
+} user_config_t;
+
+user_config_t user_config;
+
 void keyboard_post_init_user(void) {
     // Enable console debug
     debug_enable = true;
     // debug_matrix = true;
     // debug_keyboard = true;
     // debug_mouse = true;
+
+    // Update Dynamic Tapping Term
+    user_config.raw = eeconfig_read_user();
+    if (user_config.tapping_term != TAPPING_TERM) {
+        g_tapping_term = user_config.tapping_term;
+    }
+}
+
+// When EEPROM reset
+void eeconfig_init_user(void) {
+  user_config.raw = 0;
+  user_config.tapping_term = TAPPING_TERM;
+  eeconfig_update_user(user_config.raw);
 }
 
 // ---------------- LAYER --------------------------------------------------------------
@@ -24,15 +46,40 @@ void keyboard_post_init_user(void) {
 // Clear keycode timer;
 uint16_t keycode_timer = 0;
 
+// Keycode text for OLED
+char text_keycode[14];
+
+const char *translate_keycode_string(uint16_t keycode) {
+    switch (keycode) {
+        case DT_UP:
+            user_config.tapping_term = g_tapping_term;
+            eeconfig_update_user(user_config.raw);
+            sprintf(text_keycode, "TAP: %03dms", g_tapping_term);
+            return text_keycode;
+        case DT_DOWN:
+            user_config.tapping_term = g_tapping_term;
+            eeconfig_update_user(user_config.raw);
+            sprintf(text_keycode, "TAP: %03dms", g_tapping_term);
+            return text_keycode;
+        case LALT_T(KC_ENT): // to fit 14 chars
+            return "LALT_T-KC_ENT";
+        case RALT_T(KC_ENT): // to fit 14 chars
+            return "RALT_T-KC_ENT";
+        default:
+            return get_keycode_string(keycode);
+    }
+}
+
 enum custom_keycodes {
-    ALT_GUI = SAFE_RANGE,
+    ALT_GUI_KC = SAFE_RANGE,
+    TL_DEBUG_KC,
 };
 
-KEYCODE_STRING_NAMES_USER(        //
-    KEYCODE_STRING_NAME(ALT_GUI), //
-    KEYCODE_STRING_NAME(KC_APP),  //
-    KEYCODE_STRING_NAME(KC_MUTE), //
-    KEYCODE_STRING_NAME(DB_TOGG), //
+KEYCODE_STRING_NAMES_USER(            //
+    KEYCODE_STRING_NAME(ALT_GUI_KC),  //
+    KEYCODE_STRING_NAME(KC_APP),      //
+    KEYCODE_STRING_NAME(KC_MUTE),     //
+    KEYCODE_STRING_NAME(TL_DEBUG_KC), //
 );
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =                                                                //
@@ -42,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =                    
          KC_BSPC, KC_A, KC_R, KC_S, KC_T, KC_G, KC_M, KC_N, KC_E, KC_I, KC_O, KC_QUOT,                                      //
          KC_APP, KC_Z, KC_X, KC_C, KC_D, KC_V, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, DF(1),                                 //
          KC_LCTL, KC_LGUI, KC_LSFT, KC_SPC, LALT_T(KC_ENT), TT(2), TT(2), RALT_T(KC_ENT), KC_SPC, KC_RSFT, KC_HOME, KC_END, //
-         ALT_GUI                                                                                                            //
+         ALT_GUI_KC                                                                                                         //
          ),
      [1] = LAYOUT(                                                                                                   //
          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, //
@@ -53,10 +100,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =                    
          KC_TRNS                                                                                                     //
          ),
      [2] = LAYOUT(                                                                                                          //
-         QK_REBOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, //
+         QK_REBOOT, DT_DOWN, DT_UP, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, //
          KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_TRNS, KC_GRV, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_TRNS,                  //
-         KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, KC_TRNS, ALT_GUI, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS,                  //
-         EE_CLR, KC_F9, KC_F10, KC_F11, KC_F12, AU_TOGG, KC_TILD, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, DB_TOGG,              //
+         KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, KC_TRNS, ALT_GUI_KC, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS,               //
+         EE_CLR, KC_F9, KC_F10, KC_F11, KC_F12, AU_TOGG, KC_TILD, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, TL_DEBUG_KC,          //
          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,        //
          KC_MUTE                                                                                                            //
          )};
@@ -108,24 +155,24 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 }
                 alt_tab_timer = timer_read();
                 tap_code(KC_TAB);
-                oled_write_ln("RE_ALT_GUI", false);
+                oled_write_ln("RE_ALT_GUI+", false);
             } else {
                 if (!is_alt_shift_tab_active) {
                     is_alt_shift_tab_active = true;
                 }
                 alt_tab_timer = timer_read();
                 tap_code16(LSFT(KC_TAB));
-                oled_write_ln("RE_ALT_GUI", false);
+                oled_write_ln("RE_ALT_GUI-", false);
             }
             break;
         case 2:
             // Volume up / down
             if (clockwise) {
                 tap_code(KC_VOLU);
-                oled_write_ln("RE_VOLU", false);
+                oled_write_ln("RE_VOL+", false);
             } else {
                 tap_code(KC_VOLD);
-                oled_write_ln("RE_VOLD", false);
+                oled_write_ln("RE_VOL-", false);
             }
             break;
     }
@@ -278,24 +325,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     os_variant_t current_os = detected_host_os();
 
     // Debug keycodes
-    printf("Key: %s\n", get_keycode_string(keycode));
     switch (current_os) {
         case OS_LINUX:
-            printf("OS: Linux\n");
+            printf("OS: Linux");
             break;
         case OS_WINDOWS:
-            printf("OS: Windows\n");
+            printf("OS: Windows");
             break;
         case OS_MACOS:
-            printf("OS: MacOS\n");
+            printf("OS: MacOS");
             break;
         case OS_IOS:
-            printf("OS: iOS\n");
+            printf("OS: iOS");
             break;
         case OS_UNSURE:
-            printf("OS: Unsure\n");
+            printf("OS: Unsure");
             break;
     }
+    printf(" | "); // Separator
+    printf("Key: %s", translate_keycode_string(keycode));
+    printf("\n"); // New line
 
     uint8_t current_layer = get_highest_layer(layer_state | default_layer_state);
     if (current_layer != 1) {
@@ -312,10 +361,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         // Render current key name
         oled_set_cursor(8, 3);
-        oled_write_ln(get_keycode_string(keycode), false);
-
-        // Update timer
-        keycode_timer = timer_read();
+        oled_write_ln(translate_keycode_string(keycode), false);
 
         // Render keyboard tap, switch back the row/column on master side
         for (uint8_t x = (CUBE_NUMBER * row) + GAP; x < CUBE_NUMBER * (row + 1); x++) {
@@ -325,8 +371,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
     }
 
+    // Update timer
+    keycode_timer = timer_read();
+
     switch (keycode) {
-        case ALT_GUI:
+        case ALT_GUI_KC:
             if (record->event.pressed) {
                 if (current_os == OS_WINDOWS || current_os == OS_LINUX) {
                     // Windows | Open Task View
@@ -335,6 +384,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     // MacOS | Open Mission Control
                     tap_code(KC_MISSION_CONTROL);
                 }
+            }
+            break;
+        case TL_DEBUG_KC:
+            if (record->event.pressed) {
+                tap_code16(DB_TOGG);
             }
             break;
     }

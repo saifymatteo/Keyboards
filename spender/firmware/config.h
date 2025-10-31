@@ -10,6 +10,10 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 // Tapping Toggle feature TT(layer)
 #define TAPPING_TOGGLE 3
 
+// Tapping Term
+#define TAPPING_TERM 160
+#define DYNAMIC_TAPPING_TERM_INCREMENT 10 // in ms
+
 // Audio features
 #define AUDIO_PIN B6 // Pin for audio output
 #define AUDIO_DAC_SAMPLE_MAX 4095U
@@ -37,4 +41,3 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 // Deferred Callbacks
 #define MAX_DEFERRED_EXECUTORS 16
-
