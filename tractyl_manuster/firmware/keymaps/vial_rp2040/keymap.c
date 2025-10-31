@@ -12,6 +12,15 @@
 
 // ---------------- INITIALISATION --------------------------------------------------------------
 
+typedef union {
+    uint32_t raw;
+    struct {
+        uint32_t tapping_term;
+    };
+} user_config_t;
+
+user_config_t user_config;
+
 uint32_t cancel_haptic(uint32_t trigger_time, void *cb_arg) {
     gpio_write_pin_low(GP13);
     return 0;
@@ -28,6 +37,19 @@ void keyboard_post_init_user(void) {
     // debug_matrix = true;
     // debug_keyboard = true;
     // debug_mouse = true;
+
+    // Update Dynamic Tapping Term
+    user_config.raw = eeconfig_read_user();
+    if (user_config.tapping_term != TAPPING_TERM) {
+        g_tapping_term = user_config.tapping_term;
+    }
+}
+
+// When EEPROM reset
+void eeconfig_init_user(void) {
+  user_config.raw = 0;
+  user_config.tapping_term = TAPPING_TERM;
+  eeconfig_update_user(user_config.raw);
 }
 
 // Sync actions from master to slave
@@ -40,11 +62,25 @@ bool should_process_keypress(void) {
 // Clear keycode timer;
 uint16_t keycode_timer = 0;
 
-// DPI text
-char text_dpi[15];
+// Keycode text for OLED
+char text_keycode[14];
 
 const char *translate_keycode_string(uint16_t keycode) {
     switch (keycode) {
+        case DT_UP:
+            user_config.tapping_term = g_tapping_term;
+            eeconfig_update_user(user_config.raw);
+            sprintf(text_keycode, "TAP: %03dms", g_tapping_term);
+            return text_keycode;
+        case DT_DOWN:
+            user_config.tapping_term = g_tapping_term;
+            eeconfig_update_user(user_config.raw);
+            sprintf(text_keycode, "TAP: %03dms", g_tapping_term);
+            return text_keycode;
+        case RSFT_T(KC_SPC): // to fit 14 chars
+            return "RSFT_T-KC_SPC";
+        case RALT_T(KC_ENT): // to fit 14 chars
+            return "RALT_T-KC_ENT";
         case SNIPING_MODE:
             return "SNIPING";
         case SNIPING_MODE_TOGGLE:
@@ -91,14 +127,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =                    
          KC_TRNS, KC_TRNS, KC_TRNS,                                                                                  //
          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS                                               //
          ),
-     [2] = LAYOUT_with_encoder(                                                                                             //
-         QK_REBOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, //
-         KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_TRNS, KC_GRV, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_TRNS,                  //
-         KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, KC_TRNS, ALT_GUI_KC, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS,               //
-         EE_CLR, KC_F9, KC_F10, KC_F11, KC_F12, AU_TOGG, KC_TILD, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, TL_DEBUG_KC,          //
-         KC_MUTE, KC_TRNS, KC_TRNS, KC_PGUP, KC_PGDN, KC_MEDIA_PLAY_PAUSE,                                                  //
-         KC_TRNS, KC_TRNS, KC_TRNS,                                                                                         //
-         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS                                                      //
+     [2] = LAYOUT_with_encoder(                                                                                           //
+         QK_REBOOT, DT_DOWN, DT_UP, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, //
+         KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_TRNS, KC_GRV, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_TRNS,                //
+         KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, KC_TRNS, ALT_GUI_KC, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS,             //
+         EE_CLR, KC_F9, KC_F10, KC_F11, KC_F12, AU_TOGG, KC_TILD, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, TL_DEBUG_KC,        //
+         KC_MUTE, KC_TRNS, KC_TRNS, KC_PGUP, KC_PGDN, KC_MEDIA_PLAY_PAUSE,                                                //
+         KC_TRNS, KC_TRNS, KC_TRNS,                                                                                       //
+         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS                                                    //
          ),
      [3] = LAYOUT_with_encoder(                                                                                                   //
          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,              //
@@ -231,8 +267,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 } else {
                     charybdis_cycle_pointer_default_dpi(false);
                 }
-                sprintf(text_dpi, "DPI: D-%d", charybdis_get_pointer_default_dpi());
-                oled_write_ln(text_dpi, false);
+                sprintf(text_keycode, "DPI: D-%d", charybdis_get_pointer_default_dpi());
+                oled_write_ln(text_keycode, false);
             }
             // Trackball Sniping DPI Forward/Reverse
             else if (is_master_right) {
@@ -241,8 +277,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 } else {
                     charybdis_cycle_pointer_sniping_dpi(false);
                 }
-                sprintf(text_dpi, "DPI: S-%d", charybdis_get_pointer_sniping_dpi());
-                oled_write_ln(text_dpi, false);
+                sprintf(text_keycode, "DPI: S-%d", charybdis_get_pointer_sniping_dpi());
+                oled_write_ln(text_keycode, false);
             }
             break;
     }
@@ -442,9 +478,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         oled_set_cursor(8, 3);
         oled_write_ln(translate_keycode_string(keycode), false);
 
-        // Update timer
-        keycode_timer = timer_read();
-
         // Render keyboard tap, switch back the row/column on master side
         bool is_master = row >= 6;
         row            = is_master ? row - 6 : row;
@@ -455,6 +488,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
     }
+
+    // Update timer
+    keycode_timer = timer_read();
 
     switch (keycode) {
         case ALT_GUI_KC:

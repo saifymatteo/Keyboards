@@ -6,9 +6,6 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 #define MASTER_RIGHT
 
-// Dynamic Keymap
-#define DYNAMIC_KEYMAP_LAYER_COUNT  16
-
 // Remnant from USB C Pro Micro
 #define SPLIT_USB_TIMEOUT 2500
 #define SPLIT_WATCHDOG_ENABLE
@@ -18,6 +15,10 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 // Tapping Toggle feature TT(layer)
 #define TAPPING_TOGGLE 3
+
+// Tapping Term
+#define TAPPING_TERM 160
+#define DYNAMIC_TAPPING_TERM_INCREMENT 10 // in ms
 
 // Audio features
 #define AUDIO_PIN GP16 // Pin for audio output
@@ -64,11 +65,11 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 #define POINTING_DEVICE_CS_PIN GP21
 
 // Trackball settings
-#define CHARYBDIS_MINIMUM_DEFAULT_DPI 1000 // The minimum sensitivity in default mode.
+#define CHARYBDIS_MINIMUM_DEFAULT_DPI 1000    // The minimum sensitivity in default mode.
 #define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200 // Change of the sensitivity in cursor mode each time POINTER_DEFAULT_DPI_FORWARD/ REVERSE is pressed.
-#define CHARYBDIS_MINIMUM_SNIPING_DPI 400 // The sensitivity in sniping mode.
+#define CHARYBDIS_MINIMUM_SNIPING_DPI 400     // The sensitivity in sniping mode.
 #define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 100 // Change of the pointers sensitivity in sniping mode each time POINTER_SNIPING_DPI_FORWARD/ REVERSE is pressed.
-#define CHARYBDIS_DRAGSCROLL_DPI 100 // The sensitivity in dragscroll mode.
+#define CHARYBDIS_DRAGSCROLL_DPI 100          // The sensitivity in dragscroll mode.
 // #define CHARYBDIS_DRAGSCROLL_REVERSE_X // Reverse the scroll direction in dragscroll mode for the x / y axis.
 #define CHARYBDIS_DRAGSCROLL_REVERSE_Y // Reverse the scroll direction in dragscroll mode for the x / y axis.
 // #define CHARYBDIS_CARRET_BUFFER 40 // The sensitivity in carret mode. Higher number means less sensitive.
