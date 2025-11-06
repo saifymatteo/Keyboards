@@ -14,8 +14,9 @@ AUDIO_ENABLE = yes
 AUDIO_DRIVER = pwm_hardware
 
 # Backlight LED
-BACKLIGHT_ENABLE = yes
-BACKLIGHT_DRIVER = pwm
+RGBLIGHT_ENABLE = yes
+WS2812_DRIVER = vendor
+VELOCIKEY_ENABLE = yes
 
 # Encoders
 ENCODER_ENABLE = yes

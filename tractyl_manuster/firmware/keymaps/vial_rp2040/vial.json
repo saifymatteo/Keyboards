@@ -1,5 +1,5 @@
 {
-    "lighting": "qmk_backlight",
+    "lighting": "qmk_rgblight",
     "matrix": {
         "rows": 12,
         "cols": 6
@@ -54,6 +54,11 @@
             "name": "ZOOM_KC",
             "title": "Zoom Keycode",
             "shortName": "Zoom"
+        },
+        {
+            "name": "UG_VK_TOGG",
+            "title": "Toggle Velocikey (RGB Light) Keycode",
+            "shortName": "Velocikey\nToggle"
         },
         {
             "name": "TL_DEBUG_KC",

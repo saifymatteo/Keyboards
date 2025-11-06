@@ -4,7 +4,7 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 #pragma once
 
-// PWM | Audio & Backlight LED
+// PWM | Audio & RGB Light
 #undef HAL_USE_PWM
 #define HAL_USE_PWM TRUE
 

@@ -47,9 +47,9 @@ void keyboard_post_init_user(void) {
 
 // When EEPROM reset
 void eeconfig_init_user(void) {
-  user_config.raw = 0;
-  user_config.tapping_term = TAPPING_TERM;
-  eeconfig_update_user(user_config.raw);
+    user_config.raw          = 0;
+    user_config.tapping_term = TAPPING_TERM;
+    eeconfig_update_user(user_config.raw);
 }
 
 // Sync actions from master to slave
@@ -65,8 +65,29 @@ uint16_t keycode_timer = 0;
 // Keycode text for OLED
 char text_keycode[14];
 
+enum custom_keycodes {
+    // QK_KB_0 is reserved for Trackball enum (8 keys)
+    ALT_GUI_KC = QK_KB_8,
+    ZOOM_KC,
+    UG_VK_TOGG,
+    TL_DEBUG_KC,
+};
+
+KEYCODE_STRING_NAMES_USER(            //
+    KEYCODE_STRING_NAME(ALT_GUI_KC),  //
+    KEYCODE_STRING_NAME(ZOOM_KC),     //
+    KEYCODE_STRING_NAME(KC_APP),      //
+    KEYCODE_STRING_NAME(TL_DEBUG_KC), //
+    KEYCODE_STRING_NAME(UG_VK_TOGG),  //
+    KEYCODE_STRING_NAME(UG_TOGG),     //
+);
+
 const char *translate_keycode_string(uint16_t keycode) {
     switch (keycode) {
+        case RSFT_T(KC_SPC): // to fit 14 chars
+            return "RSFT_T-KC_SPC";
+        case RALT_T(KC_ENT): // to fit 14 chars
+            return "RALT_T-KC_ENT";
         case DT_UP:
             user_config.tapping_term = g_tapping_term;
             eeconfig_update_user(user_config.raw);
@@ -77,10 +98,12 @@ const char *translate_keycode_string(uint16_t keycode) {
             eeconfig_update_user(user_config.raw);
             sprintf(text_keycode, "TAP: %03dms", g_tapping_term);
             return text_keycode;
-        case RSFT_T(KC_SPC): // to fit 14 chars
-            return "RSFT_T-KC_SPC";
-        case RALT_T(KC_ENT): // to fit 14 chars
-            return "RALT_T-KC_ENT";
+        case UG_NEXT:
+            sprintf(text_keycode, "LED: %dm", rgblight_get_mode());
+            return text_keycode;
+        case UG_VALU:
+            sprintf(text_keycode, "LED: %dv", rgblight_get_val());
+            return text_keycode;
         case SNIPING_MODE:
             return "SNIPING";
         case SNIPING_MODE_TOGGLE:
@@ -93,20 +116,6 @@ const char *translate_keycode_string(uint16_t keycode) {
             return get_keycode_string(keycode);
     }
 }
-
-enum custom_keycodes {
-    // QK_KB_0 is reserved for Trackball enum (8 keys)
-    ALT_GUI_KC = QK_KB_8,
-    ZOOM_KC,
-    TL_DEBUG_KC,
-};
-
-KEYCODE_STRING_NAMES_USER(            //
-    KEYCODE_STRING_NAME(ALT_GUI_KC),  //
-    KEYCODE_STRING_NAME(ZOOM_KC),     //
-    KEYCODE_STRING_NAME(KC_APP),      //
-    KEYCODE_STRING_NAME(TL_DEBUG_KC), //
-);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =                                //
     {[0] = LAYOUT_with_encoder(                                                             //
@@ -128,9 +137,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =                    
          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS                                               //
          ),
      [2] = LAYOUT_with_encoder(                                                                                           //
-         QK_REBOOT, DT_DOWN, DT_UP, KC_TRNS, KC_TRNS, BL_STEP, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, //
-         KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, BL_BRTG, KC_GRV, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_TRNS,                //
-         KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, BL_TOGG, ALT_GUI_KC, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS,             //
+         QK_REBOOT, DT_DOWN, DT_UP, KC_TRNS, UG_NEXT, UG_VALU, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, //
+         KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, UG_VK_TOGG, KC_GRV, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_TRNS,             //
+         KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, UG_TOGG, ALT_GUI_KC, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS,             //
          EE_CLR, KC_F9, KC_F10, KC_F11, KC_F12, AU_TOGG, KC_TILD, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, TL_DEBUG_KC,        //
          KC_MUTE, KC_TRNS, KC_TRNS, KC_PGUP, KC_PGDN, KC_MEDIA_PLAY_PAUSE,                                                //
          KC_TRNS, KC_TRNS, KC_TRNS,                                                                                       //
@@ -436,6 +445,44 @@ bool oled_task_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     os_variant_t current_os = detected_host_os();
 
+    switch (keycode) {
+        case ALT_GUI_KC:
+            if (record->event.pressed) {
+                if (current_os == OS_WINDOWS || current_os == OS_LINUX) {
+                    // Windows | Open Task View
+                    tap_code16(LGUI(KC_TAB));
+                } else if (current_os == OS_MACOS) {
+                    // MacOS | Open Mission Control
+                    tap_code(KC_MISSION_CONTROL);
+                }
+            }
+            break;
+        case ZOOM_KC:
+            if (record->event.pressed) {
+                if (current_os == OS_WINDOWS) {
+                    // Windows | Cancel Magnifier
+                    tap_code16(LGUI(KC_ESC));
+                } else if (current_os == OS_LINUX) {
+                    // Linux | Toggle Zoom (Gnome)
+                    tap_code16(LAG(KC_8));
+                } else if (current_os == OS_MACOS) {
+                    // MacOS | Toggle Zoom
+                    tap_code16(LCA(KC_8));
+                }
+            }
+            break;
+        case UG_VK_TOGG:
+            if (record->event.pressed) {
+                tap_code16(VK_TOGG);
+            }
+            break;
+        case TL_DEBUG_KC:
+            if (record->event.pressed) {
+                tap_code16(DB_TOGG);
+            }
+            break;
+    }
+
     // Debug prints
     switch (current_os) {
         case OS_LINUX:
@@ -492,38 +539,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // Update timer
     keycode_timer = timer_read();
 
-    switch (keycode) {
-        case ALT_GUI_KC:
-            if (record->event.pressed) {
-                if (current_os == OS_WINDOWS || current_os == OS_LINUX) {
-                    // Windows | Open Task View
-                    tap_code16(LGUI(KC_TAB));
-                } else if (current_os == OS_MACOS) {
-                    // MacOS | Open Mission Control
-                    tap_code(KC_MISSION_CONTROL);
-                }
-            }
-            break;
-        case ZOOM_KC:
-            if (record->event.pressed) {
-                if (current_os == OS_WINDOWS) {
-                    // Windows | Cancel Magnifier
-                    tap_code16(LGUI(KC_ESC));
-                } else if (current_os == OS_LINUX) {
-                    // Linux | Toggle Zoom (Gnome)
-                    tap_code16(LAG(KC_8));
-                } else if (current_os == OS_MACOS) {
-                    // MacOS | Toggle Zoom
-                    tap_code16(LCA(KC_8));
-                }
-            }
-            break;
-        case TL_DEBUG_KC:
-            if (record->event.pressed) {
-                tap_code16(DB_TOGG);
-            }
-            break;
-    }
     return true;
 };
 
