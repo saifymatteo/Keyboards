@@ -128,9 +128,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =                    
          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS                                               //
          ),
      [2] = LAYOUT_with_encoder(                                                                                           //
-         QK_REBOOT, DT_DOWN, DT_UP, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, //
-         KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_TRNS, KC_GRV, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_TRNS,                //
-         KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, KC_TRNS, ALT_GUI_KC, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS,             //
+         QK_REBOOT, DT_DOWN, DT_UP, KC_TRNS, KC_TRNS, BL_STEP, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, //
+         KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, BL_BRTG, KC_GRV, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_TRNS,                //
+         KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, BL_TOGG, ALT_GUI_KC, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS,             //
          EE_CLR, KC_F9, KC_F10, KC_F11, KC_F12, AU_TOGG, KC_TILD, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, TL_DEBUG_KC,        //
          KC_MUTE, KC_TRNS, KC_TRNS, KC_PGUP, KC_PGDN, KC_MEDIA_PLAY_PAUSE,                                                //
          KC_TRNS, KC_TRNS, KC_TRNS,                                                                                       //

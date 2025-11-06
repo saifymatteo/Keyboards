@@ -13,6 +13,10 @@ DEFERRED_EXEC_ENABLE = yes
 AUDIO_ENABLE = yes
 AUDIO_DRIVER = pwm_hardware
 
+# Backlight LED
+BACKLIGHT_ENABLE = yes
+BACKLIGHT_DRIVER = pwm
+
 # Encoders
 ENCODER_ENABLE = yes
 

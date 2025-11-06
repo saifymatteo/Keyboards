@@ -34,6 +34,17 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 #define AUDIO_CLICKY
 #define AUDIO_CLICKY_FREQ_RANDOMNESS 1.0f
 
+// Backlight LED
+#define BACKLIGHT_PWM_DRIVER PWMD1
+#define BACKLIGHT_PWM_CHANNEL RP2040_PWM_CHANNEL_B
+#define BACKLIGHT_PIN GP28
+#define BACKLIGHT_LEVELS 3
+#define BACKLIGHT_DEFAULT_ON true
+#define BACKLIGHT_ON_STATE 1
+#define BACKLIGHT_BREATHING
+#define BREATHING_PERIOD 6
+#define BACKLIGHT_DEFAULT_BREATHING true
+
 // Serial using USART | Half Duplex
 #define SERIAL_USART_TX_PIN GP12
 

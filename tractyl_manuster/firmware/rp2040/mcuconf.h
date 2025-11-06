@@ -10,9 +10,11 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 #undef RP_SPI_USE_SPI0
 #define RP_SPI_USE_SPI0 TRUE
 
-// PWM | Audio
+// PWM | Audio & Backlight LED
 #undef RP_PWM_USE_PWM0
 #define RP_PWM_USE_PWM0 TRUE
+#undef RP_PWM_USE_PWM1
+#define RP_PWM_USE_PWM1 TRUE
 
 // I2C | OLED
 #undef RP_I2C_USE_I2C0
