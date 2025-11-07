@@ -39,6 +39,7 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 #define RGBLIGHT_LED_COUNT 6
 #define RGBLIGHT_SLEEP
 #define RGBLIGHT_SPLIT
+#define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_CHRISTMAS
 
 // RGB Light Modes
 #define RGBLIGHT_EFFECT_ALTERNATING

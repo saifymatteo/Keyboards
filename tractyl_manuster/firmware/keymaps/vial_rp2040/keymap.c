@@ -79,6 +79,7 @@ KEYCODE_STRING_NAMES_USER(            //
     KEYCODE_STRING_NAME(KC_APP),      //
     KEYCODE_STRING_NAME(TL_DEBUG_KC), //
     KEYCODE_STRING_NAME(UG_VK_TOGG),  //
+    KEYCODE_STRING_NAME(UG_NEXT),     //
     KEYCODE_STRING_NAME(UG_TOGG),     //
 );
 
@@ -98,11 +99,11 @@ const char *translate_keycode_string(uint16_t keycode) {
             eeconfig_update_user(user_config.raw);
             sprintf(text_keycode, "TAP: %03dms", g_tapping_term);
             return text_keycode;
-        case UG_NEXT:
-            sprintf(text_keycode, "LED: %dm", rgblight_get_mode());
+        case UG_HUEU:
+            sprintf(text_keycode, "RGB: %03d Hue", rgblight_get_hue());
             return text_keycode;
         case UG_VALU:
-            sprintf(text_keycode, "LED: %dv", rgblight_get_val());
+            sprintf(text_keycode, "RGB: %03d Val", rgblight_get_val());
             return text_keycode;
         case SNIPING_MODE:
             return "SNIPING";
@@ -137,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =                    
          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS                                               //
          ),
      [2] = LAYOUT_with_encoder(                                                                                           //
-         QK_REBOOT, DT_DOWN, DT_UP, KC_TRNS, UG_NEXT, UG_VALU, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, //
+         QK_REBOOT, DT_DOWN, DT_UP, UG_NEXT, UG_HUEU, UG_VALU, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, //
          KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, UG_VK_TOGG, KC_GRV, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_TRNS,             //
          KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, UG_TOGG, ALT_GUI_KC, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS,             //
          EE_CLR, KC_F9, KC_F10, KC_F11, KC_F12, AU_TOGG, KC_TILD, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, TL_DEBUG_KC,        //
@@ -295,6 +296,101 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return false;
 }
 
+// ---------------- RGB UnderGlow --------------------------------------------------------------
+
+// Translate the mode number to human readable text. Max 14 `chars`.
+// See: `quantum/rgblight/rgblight.h:25`.
+const char *translate_rgb_mode_string(uint8_t mode) {
+    switch (mode) {
+        case 1:
+            return "Static Light";
+        case 2:
+            return "Breathing";
+        case 3:
+            return "Breathing 1";
+        case 4:
+            return "Breathing 2";
+        case 5:
+            return "Breathing 3";
+        case 6:
+            return "RB Mood";
+        case 7:
+            return "RB Mood 1";
+        case 8:
+            return "RB Mood 2";
+        case 9:
+            return "RB Swirl";
+        case 10:
+            return "RB Swirl 1";
+        case 11:
+            return "RB Swirl 2";
+        case 12:
+            return "RB Swirl 3";
+        case 13:
+            return "RB Swirl 4";
+        case 14:
+            return "RB Swirl 5";
+        case 15:
+            return "Snake";
+        case 16:
+            return "Snake 1";
+        case 17:
+            return "Snake 2";
+        case 18:
+            return "Snake 3";
+        case 19:
+            return "Snake 4";
+        case 20:
+            return "Snake 5";
+        case 21:
+            return "Knight";
+        case 22:
+            return "Knight 1";
+        case 23:
+            return "Knight 2";
+        case 24:
+            return "Christmas";
+        case 25:
+            return "Gradient";
+        case 26:
+            return "Gradient 1";
+        case 27:
+            return "Gradient 2";
+        case 28:
+            return "Gradient 3";
+        case 29:
+            return "Gradient 4";
+        case 30:
+            return "Gradient 5";
+        case 31:
+            return "Gradient 6";
+        case 32:
+            return "Gradient 7";
+        case 33:
+            return "Gradient 8";
+        case 34:
+            return "Gradient 9";
+        case 35:
+            return "RGB Test";
+        case 36:
+            return "Alternating";
+        case 37:
+            return "Twinkle";
+        case 38:
+            return "Twinkle 1";
+        case 39:
+            return "Twinkle 2";
+        case 40:
+            return "Twinkle 3";
+        case 41:
+            return "Twinkle 4";
+        case 42:
+            return "Twinkle 5";
+        default:
+            return "Undefined";
+    }
+}
+
 // ---------------- OLED --------------------------------------------------------------
 
 // Keyboard Matrix. Taken from [github](https://github.com/vuon0029/qmk/tree/master/keyboards/mechwild/mercutio/keymaps/dracutio)
@@ -305,8 +401,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 // 2. To convert video to gif, use this: `ffmpeg -i <video-file> -vf "fps=10" -loop 0 <gif-output>`
 // 3. Convert from Gif. [github](https://github.com/AskMeAboutBirds/qmk-oled-animation-compressor)
 
-// WPM and row/column texts
-char text_wpm[10];
+// Row/Column text
 char text_row_col[13];
 
 // Keyboard Matrix display
@@ -363,30 +458,29 @@ bool oled_task_user(void) {
             oled_write_pixel(MATRIX_DISPLAY_X, y, true);
         }
 
-        // Render WPM text
-        oled_set_cursor(8, 0);
-        sprintf(text_wpm, "WPM: %03d", get_current_wpm());
-        oled_write_ln(text_wpm, false);
-
         // Render OS
-        oled_set_cursor(8, 1);
+        oled_set_cursor(8, 0);
         switch (detected_host_os()) {
             case OS_LINUX:
-                oled_write_ln("OS : Linux", false);
+                oled_write_ln("OS: Linux", false);
                 break;
             case OS_WINDOWS:
-                oled_write_ln("OS : Windows", false);
+                oled_write_ln("OS: Windows", false);
                 break;
             case OS_MACOS:
-                oled_write_ln("OS : MacOS", false);
+                oled_write_ln("OS: MacOS", false);
                 break;
             case OS_IOS:
-                oled_write_ln("OS : iOS", false);
+                oled_write_ln("OS: iOS", false);
                 break;
             case OS_UNSURE:
-                oled_write_ln("OS : Unsure", false);
+                oled_write_ln("OS: Unsure", false);
                 break;
         }
+
+        // RGB Light Mode
+        oled_set_cursor(8, 1);
+        oled_write_ln(translate_rgb_mode_string(rgblight_get_mode()), false);
 
         // Render Layers
         oled_set_cursor(8, 2);
