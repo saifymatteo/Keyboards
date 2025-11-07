@@ -36,7 +36,9 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 // RGB Light
 #define WS2812_DI_PIN GP28
-#define RGBLIGHT_LED_COUNT 4
+#define RGBLIGHT_LED_COUNT 6
+#define RGBLIGHT_SLEEP
+#define RGBLIGHT_SPLIT
 
 // RGB Light Modes
 #define RGBLIGHT_EFFECT_ALTERNATING
