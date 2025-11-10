@@ -39,7 +39,8 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 #define RGBLIGHT_LED_COUNT 6
 #define RGBLIGHT_SLEEP
 #define RGBLIGHT_SPLIT
-#define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_CHRISTMAS
+#define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_RAINBOW_SWIRL + 5 // Last Rainbow Swirl mode
+#define RGBLIGHT_DEFAULT_VAL 136                              // 8th-step of 17 out of 255
 
 // RGB Light Modes
 #define RGBLIGHT_EFFECT_ALTERNATING
