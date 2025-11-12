@@ -1,0 +1,91 @@
+{
+    "lighting": "none",
+    "matrix": {
+        "rows": 4,
+        "cols": 5
+    },
+    "customKeycodes": [
+        {
+            "name": "ALT_GUI_KC",
+            "title": "Alt GUI Keycode",
+            "shortName": "Alt GUI\nKC"
+        },
+        {
+            "name": "ALT_GUI_RER",
+            "title": "Alt GUI Rotary Encoder Right",
+            "shortName": "Alt GUI\nRE Right"
+        },
+        {
+            "name": "ALT_GUI_REL",
+            "title": "Alt GUI Rotary Encoder Left",
+            "shortName": "Alt GUI\nRE Left"
+        },
+        {
+            "name": "ZOOM_KC",
+            "title": "Zoom Keycode",
+            "shortName": "Zoom\nKC"
+        },
+        {
+            "name": "ZOOM_RER",
+            "title": "Zoom Rotary Encoder Right",
+            "shortName": "Zoom\nRE Right"
+        },
+        {
+            "name": "ZOOM_REL",
+            "title": "Zoom Rotary Encoder Left",
+            "shortName": "Zoom\nRE Left"
+        }
+    ],
+    "layouts": {
+        "keymap": [
+            [
+                "0,0\n\n\n\n\n\n\n\n\ne",
+                "0,1\n\n\n\n\n\n\n\n\ne",
+                "1,0\n\n\n\n\n\n\n\n\ne",
+                "1,1\n\n\n\n\n\n\n\n\ne"
+            ],
+            [
+                {
+                    "x": 0.5
+                },
+                "0,3",
+                {
+                    "x": 1
+                },
+                "1,3"
+            ],
+            [
+                "0,0",
+                "0,1",
+                "0,2",
+                "2,0\n\n\n\n\n\n\n\n\ne",
+                "2,1\n\n\n\n\n\n\n\n\ne"
+            ],
+            [
+                "1,0",
+                "1,1",
+                "1,2",
+                {
+                    "x": 0.5
+                },
+                "2,3"
+            ],
+            [
+                "2,0",
+                "2,1",
+                "2,2",
+                "3,0\n\n\n\n\n\n\n\n\ne",
+                "3,1\n\n\n\n\n\n\n\n\ne"
+            ],
+            [
+                "3,0",
+                "3,1",
+                "3,2",
+                {
+                    "x": 0.5
+                },
+                "3,3"
+            ]
+        ]
+    }
+}
