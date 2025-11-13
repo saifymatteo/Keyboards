@@ -334,4 +334,15 @@ void matrix_scan_user(void) {
     }
 };
 
+// ---------------- SAVE MEMORY --------------------------------------------------------------
+
+#ifndef MAGIC_ENABLE
+uint16_t keycode_config(uint16_t keycode) {
+    return keycode;
+}
+uint8_t mod_config(uint8_t mod) {
+    return mod;
+}
+#endif
+
 // END OF FILE
