@@ -15,7 +15,11 @@ typedef union {
 
 user_config_t user_config;
 
-// ---------------- LAYER --------------------------------------------------------------
+// ---------------- OS DETECTION --------------------------------------------------------------
+
+os_variant_t current_os = OS_MACOS;
+
+// ---------------- KEYCODES --------------------------------------------------------------
 
 // Clear keycode timer;
 uint16_t keycode_timer = 0;
@@ -28,17 +32,18 @@ enum custom_keycodes {
     ALT_GUI_KC = QK_KB_8,
     ZOOM_KC,
     UG_VK_TOGG,
-    TL_DEBUG_KC,
+    OS_SWITCH_KC,
 };
 
-KEYCODE_STRING_NAMES_USER(            //
-    KEYCODE_STRING_NAME(ALT_GUI_KC),  //
-    KEYCODE_STRING_NAME(ZOOM_KC),     //
-    KEYCODE_STRING_NAME(KC_APP),      //
-    KEYCODE_STRING_NAME(TL_DEBUG_KC), //
-    KEYCODE_STRING_NAME(UG_VK_TOGG),  //
-    KEYCODE_STRING_NAME(UG_NEXT),     //
-    KEYCODE_STRING_NAME(UG_TOGG),     //
+KEYCODE_STRING_NAMES_USER(             //
+    KEYCODE_STRING_NAME(ALT_GUI_KC),   //
+    KEYCODE_STRING_NAME(ZOOM_KC),      //
+    KEYCODE_STRING_NAME(UG_VK_TOGG),   //
+    KEYCODE_STRING_NAME(OS_SWITCH_KC), //
+    // Keycodes not recognised by default
+    KEYCODE_STRING_NAME(KC_APP),  //
+    KEYCODE_STRING_NAME(UG_NEXT), //
+    KEYCODE_STRING_NAME(UG_TOGG), //
 );
 
 // ---------------- ENCODER --------------------------------------------------------------

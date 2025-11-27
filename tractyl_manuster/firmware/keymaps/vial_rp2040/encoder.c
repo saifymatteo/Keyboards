@@ -13,8 +13,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     bool is_master_right = index == 1; // Master (right) encoder
     bool is_slave_left   = index == 0; // Slave (left) encoder
 
-    os_variant_t current_os = detected_host_os();
-
     // Update keycode timer
     keycode_timer = timer_read();
 

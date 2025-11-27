@@ -72,7 +72,7 @@ bool oled_task_user(void) {
 
         // Render OS
         oled_set_cursor(8, 0);
-        switch (detected_host_os()) {
+        switch (current_os) {
             case OS_LINUX:
                 oled_write_ln("OS: Linux", false);
                 break;

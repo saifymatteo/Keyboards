@@ -61,9 +61,9 @@
             "shortName": "Velocikey\nToggle"
         },
         {
-            "name": "TL_DEBUG_KC",
-            "title": "Toggle Debug Mode Keycode",
-            "shortName": "Debug\nToggle"
+            "name": "OS_SWITCH_KC",
+            "title": "Switch Current OS Keycode",
+            "shortName": "OS\nSwitch"
         }
     ],
     "layouts": {

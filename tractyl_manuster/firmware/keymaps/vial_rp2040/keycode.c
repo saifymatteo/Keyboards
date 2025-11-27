@@ -51,8 +51,6 @@ bool should_process_keypress(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    os_variant_t current_os = detected_host_os();
-
     switch (keycode) {
         case ALT_GUI_KC:
             if (record->event.pressed) {
@@ -84,9 +82,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(VK_TOGG);
             }
             break;
-        case TL_DEBUG_KC:
+        case OS_SWITCH_KC:
             if (record->event.pressed) {
-                tap_code16(DB_TOGG);
+                switch (current_os) {
+                    case OS_LINUX:
+                        current_os = OS_WINDOWS;
+                        break;
+                    case OS_WINDOWS:
+                        current_os = OS_MACOS;
+                        break;
+                    case OS_MACOS:
+                        current_os = OS_IOS;
+                        break;
+                    case OS_IOS:
+                        current_os = OS_LINUX;
+                        break;
+                    case OS_UNSURE:
+                        current_os = OS_LINUX;
+                        break;
+                }
             }
             break;
     }
@@ -154,9 +168,9 @@ void matrix_scan_user(void) {
     // ALT key hold timer
     if (is_alt_tab_active | is_alt_shift_tab_active) {
         if (timer_elapsed(alt_tab_timer) > 500) {
-            unregister_code(detected_host_os() == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
+            unregister_code(current_os == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
             is_alt_tab_active       = false;
             is_alt_shift_tab_active = false;
         }
     }
-};
+}

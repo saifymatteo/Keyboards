@@ -10,6 +10,7 @@
 #include "oled.c"
 #include "haptic.c"
 #include "keycode.c"
+#include "os_detection.c"
 
 void keyboard_pre_init_user(void) {
     // Haptic motor PIN
@@ -22,6 +23,9 @@ void keyboard_post_init_user(void) {
     // debug_matrix = true;
     // debug_keyboard = true;
     // debug_mouse = true;
+
+    // Register deferred callback for OS Detection
+    defer_exec(1000, custom_os_settings, NULL);
 
     // Update Dynamic Tapping Term
     user_config.raw = eeconfig_read_user();
@@ -60,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] =                    
          QK_REBOOT, DT_DOWN, DT_UP, UG_NEXT, UG_HUEU, UG_VALU, KC_PSCR, KC_INS, KC_TRNS, KC_TRNS, KC_TRNS, QK_BOOTLOADER, //
          KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, UG_VK_TOGG, KC_GRV, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_TRNS,             //
          KC_TRNS, KC_F5, KC_F6, KC_F7, KC_F8, UG_TOGG, ALT_GUI_KC, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS,             //
-         EE_CLR, KC_F9, KC_F10, KC_F11, KC_F12, AU_TOGG, KC_TILD, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, TL_DEBUG_KC,        //
+         EE_CLR, KC_F9, KC_F10, KC_F11, KC_F12, AU_TOGG, KC_TILD, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, OS_SWITCH_KC,       //
          KC_MUTE, KC_TRNS, KC_TRNS, KC_PGUP, KC_PGDN, KC_MEDIA_PLAY_PAUSE,                                                //
          KC_TRNS, KC_TRNS, KC_TRNS,                                                                                       //
          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS                                                    //
