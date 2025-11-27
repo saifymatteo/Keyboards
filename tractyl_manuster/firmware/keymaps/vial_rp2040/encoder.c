@@ -14,9 +14,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     bool is_master_right = index == 1; // Master (right) encoder
     bool is_slave_left   = index == 0; // Slave (left) encoder
 
-    // Update keycode timer
-    keycode_timer = timer_read();
-
     // Set matrix for Rotary rotation
     oled_set_cursor(0, 3);
 
@@ -142,4 +139,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 void post_encoder_update_user(uint8_t index, bool clockwise) {
     refresh_rgb();
 
+    // Update keycode timer
+    keycode_timer = timer_read();
 }

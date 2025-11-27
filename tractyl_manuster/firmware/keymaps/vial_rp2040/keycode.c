@@ -105,28 +105,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
     }
 
-    // Debug prints
-    switch (current_os) {
-        case OS_LINUX:
-            printf("OS: Linux");
-            break;
-        case OS_WINDOWS:
-            printf("OS: Windows");
-            break;
-        case OS_MACOS:
-            printf("OS: MacOS");
-            break;
-        case OS_IOS:
-            printf("OS: iOS");
-            break;
-        case OS_UNSURE:
-            printf("OS: Unsure");
-            break;
-    }
-    printf(" | "); // Separator
-    printf("Key: %s", translate_keycode_string(keycode));
-    printf("\n"); // New line
-
     // Haptic trigger, immediate vibrate with 350ms duration
     gpio_write_pin_high(GP13);
     defer_exec(350, cancel_haptic, NULL);
@@ -158,15 +136,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
     }
 
-    // Update timer
-    keycode_timer = timer_read();
-
     return true;
 };
 
 void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         refresh_rgb();
+
+        // Update timer
+        keycode_timer = timer_read();
+
+        // Debug prints
+        switch (current_os) {
+            case OS_LINUX:
+                printf("OS: Linux");
+                break;
+            case OS_WINDOWS:
+                printf("OS: Windows");
+                break;
+            case OS_MACOS:
+                printf("OS: MacOS");
+                break;
+            case OS_IOS:
+                printf("OS: iOS");
+                break;
+            case OS_UNSURE:
+                printf("OS: Unsure");
+                break;
+        }
+        printf(" | "); // Separator
+        printf("Key: %s", translate_keycode_string(keycode));
+        printf("\n"); // New line
     }
 };
 
