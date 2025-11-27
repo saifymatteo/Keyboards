@@ -5,6 +5,7 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
+#include "variables.c"
 
 // Translate the mode number to human readable text. Max 14 `chars`.
 // See: `quantum/rgblight/rgblight.h:25`.
@@ -96,5 +97,21 @@ const char *translate_rgb_mode_string(uint8_t mode) {
             return "Twinkle 5";
         default:
             return "Undefined";
+    }
+}
+
+void refresh_rgb(void) {
+    rgb_key_timer = timer_read32(); // store time of last refresh
+    if (is_rgb_timeout) {
+        is_rgb_timeout = false;
+        rgblight_wakeup();
+    }
+}
+
+void check_rgb_timeout(void) {
+    // check if RGB has already timeout and if enough time has passed
+    if (!is_rgb_timeout && timer_elapsed32(rgb_key_timer) > RGBLIGHT_TIMEOUT) {
+        rgblight_suspend();
+        is_rgb_timeout = true;
     }
 }

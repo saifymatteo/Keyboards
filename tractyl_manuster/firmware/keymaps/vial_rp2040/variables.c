@@ -6,6 +6,8 @@
 
 #include QMK_KEYBOARD_H
 
+// ---------------- TAP TERM --------------------------------------------------------------
+
 typedef union {
     uint32_t raw;
     struct {
@@ -45,6 +47,11 @@ KEYCODE_STRING_NAMES_USER(             //
     KEYCODE_STRING_NAME(UG_NEXT), //
     KEYCODE_STRING_NAME(UG_TOGG), //
 );
+
+// ---------------- RGB UNDERGLOW --------------------------------------------------------------
+
+static uint32_t rgb_key_timer;          // timer for last keyboard activity, use 32bit value and function to make longer idle time possible
+bool            is_rgb_timeout = false; // store if RGB has timed out or not in a boolean
 
 // ---------------- ENCODER --------------------------------------------------------------
 

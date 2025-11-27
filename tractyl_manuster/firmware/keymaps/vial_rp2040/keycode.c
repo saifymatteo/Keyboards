@@ -164,7 +164,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 };
 
-void matrix_scan_user(void) {
+void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        refresh_rgb();
+    }
+};
+
+// Alternative to [matrix_scan_user]. This function will called after all QMK processing is done.
+void housekeeping_task_user(void) {
+    // Periodically check for RGB timeout
+    check_rgb_timeout();
+
     // ALT key hold timer
     if (is_alt_tab_active | is_alt_shift_tab_active) {
         if (timer_elapsed(alt_tab_timer) > 500) {

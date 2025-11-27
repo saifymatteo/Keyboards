@@ -39,6 +39,7 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 #define WS2812_DI_PIN GP28
 #define RGBLIGHT_LED_COUNT 6
 #define RGBLIGHT_SLEEP
+#define RGBLIGHT_TIMEOUT 180000 // 3 minutes
 #define RGBLIGHT_SPLIT
 #define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_RAINBOW_SWIRL + 5 // Last Rainbow Swirl mode
 #define RGBLIGHT_DEFAULT_VAL 136                              // 8th-step of 17 out of 255
@@ -67,6 +68,7 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 #define SPLIT_LAYER_STATE_ENABLE // For Layer state
 #define SPLIT_LED_STATE_ENABLE   // For Caps, Num Lock state
 #define OLED_BRIGHTNESS 255      // from 0 to 255
+#define OLED_TIMEOUT 60000       // 60 seconds
 #define OLED_DISPLAY_WIDTH 128
 #define OLED_DISPLAY_HEIGHT 32
 

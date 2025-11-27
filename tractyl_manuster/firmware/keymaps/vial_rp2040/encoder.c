@@ -7,6 +7,7 @@
 #include QMK_KEYBOARD_H
 #include "variables.c"
 #include "tractyl_manuform.c" // import whole content instead header only
+#include "rgb_underglow.c"
 
 // Note: current keyboard and RP2040 does not support ENCODER_MAP_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
@@ -136,4 +137,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     }
 
     return false;
+}
+
+void post_encoder_update_user(uint8_t index, bool clockwise) {
+    refresh_rgb();
+
 }
