@@ -4,6 +4,9 @@ BOOTLOADER = caterina
 # Driver
 I2C_DRIVER_REQUIRED = yes
 
+# Deferred Callback
+DEFERRED_EXEC_ENABLE = yes
+
 # OS Detection
 OS_DETECTION_ENABLE = yes
 

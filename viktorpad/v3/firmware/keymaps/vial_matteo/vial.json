@@ -34,6 +34,21 @@
             "name": "ZOOM_REL",
             "title": "Zoom Rotary Encoder Left",
             "shortName": "Zoom\nRE Left"
+        },
+        {
+            "name": "OS_SWITCH_KC",
+            "title": "Switch Current OS Keycode",
+            "shortName": "OS\nSwitch"
+        },
+        {
+            "name": "ROTATE_CANVAS_RER",
+            "title": "Rotate Canvas Right Keycode",
+            "shortName": "Rotate\nCanvas\nRight"
+        },
+        {
+            "name": "ROTATE_CANVAS_REL",
+            "title": "Rotate Canvas Left Keycode",
+            "shortName": "Rotate\nCanvas\nLeft"
         }
     ],
     "layouts": {
