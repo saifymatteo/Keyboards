@@ -102,16 +102,16 @@ bool oled_task_user(void) {
         oled_set_cursor(8, 2);
         switch (current_layer) {
             case 0:
-                oled_write_ln("Base", false);
+                oled_write_ln("Default", false);
                 break;
             case 1:
                 oled_write_ln("Numpad", false);
                 break;
             case 2:
-                oled_write_ln("Mouse", false);
+                oled_write_ln("WASD", false);
                 break;
             case 3:
-                oled_write_ln("Dynamic", false);
+                oled_write_ln("Mouse", false);
                 break;
             default:
                 oled_write_ln("Undefined", false);
