@@ -24,6 +24,7 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 #define OLED_BRIGHTNESS 255 // from 0 to 255
 #define OLED_DISPLAY_WIDTH 128
 #define OLED_DISPLAY_HEIGHT 64
+#define OLED_DISPLAY_128X64 // required for 128x64 displays
 
 // Encoders
 #define ENCODER_A_PINS {B4, B4, B4, B4}
