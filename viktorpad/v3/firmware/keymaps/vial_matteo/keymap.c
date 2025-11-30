@@ -5,10 +5,16 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
+#include "deferred_exec.h"
 #include "os_detection.c"
 #include "encoder.c"
 #include "keycode.c"
 #include "oled.c"
+
+void keyboard_pre_init_user(void) {
+    // Haptic motor PIN
+    gpio_set_pin_output(B5);
+}
 
 void keyboard_post_init_user(void) {
     // Register deferred callback for OS Detection

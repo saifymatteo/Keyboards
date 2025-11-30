@@ -7,6 +7,7 @@
 #include QMK_KEYBOARD_H
 #include "variables.c"
 #include "oled.c"
+#include "haptic.c"
 
 const char *translate_keycode_string(uint16_t keycode) {
     switch (keycode) {
@@ -125,6 +126,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
     }
+
+    // Haptic trigger, immediate vibrate with 350ms duration
+    gpio_write_pin_high(B5);
+    defer_exec(350, cancel_haptic, NULL);
 
     uint8_t current_layer = get_highest_layer(layer_state | default_layer_state);
     if (current_layer != 1) {
