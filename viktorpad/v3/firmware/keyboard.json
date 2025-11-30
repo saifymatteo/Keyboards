@@ -11,9 +11,9 @@
     "bootloader": "caterina",
     "pin_compatible": "promicro",
     "usb": {
-        "pid": "0x3536",
+        "pid": "0xFEED",
         "device_version": "0.0.1",
-        "vid": "0x44DD"
+        "vid": "0xFEED"
     },
     "layouts": {
         "LAYOUT": {
