@@ -51,9 +51,29 @@
             "shortName": "Alt\nGUI"
         },
         {
+            "name": "ALT_GUI_RER",
+            "title": "Alt GUI Rotary Right Keycode",
+            "shortName": "Alt\nGUI\nRight"
+        },
+        {
+            "name": "ALT_GUI_REL",
+            "title": "Alt GUI Rotary Left Keycode",
+            "shortName": "Alt\nGUI\nLeft"
+        },
+        {
             "name": "ZOOM_KC",
             "title": "Zoom Keycode",
             "shortName": "Zoom"
+        },
+        {
+            "name": "ZOOM_RER",
+            "title": "Zoom Rotary Right Keycode",
+            "shortName": "Zoom\nRight"
+        },
+        {
+            "name": "ZOOM_REL",
+            "title": "Zoom Rotary Left Keycode",
+            "shortName": "Zoom\nLeft"
         },
         {
             "name": "UG_VK_TOGG",

@@ -6,7 +6,7 @@
 
 #include QMK_KEYBOARD_H
 #include "variables.c"
-#include "tractyl_manuform.h"
+#include "tractyl_manuform.c"
 #include "haptic.c"
 #include "oled.c"
 
@@ -36,6 +36,14 @@ const char *translate_keycode_string(uint16_t keycode) {
             return "DRAGSCROLL";
         case DRAGSCROLL_MODE_TOGGLE:
             return "DRAGSCROLL_TG";
+        case POINTER_DEFAULT_DPI_REVERSE:
+        case POINTER_DEFAULT_DPI_FORWARD:
+            sprintf(text_keycode, "DPI: D-%d", charybdis_get_pointer_default_dpi());
+            return text_keycode;
+        case POINTER_SNIPING_DPI_REVERSE:
+        case POINTER_SNIPING_DPI_FORWARD:
+            sprintf(text_keycode, "DPI: S-%d", charybdis_get_pointer_sniping_dpi());
+            return text_keycode;
         default:
             return get_keycode_string(keycode);
     }
@@ -58,6 +66,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_MISSION_CONTROL);
                 }
                 break;
+            case ALT_GUI_RER:
+                // Windows: Alt tab (need to hold alt)
+                // MacOS: Command tab (need to hold command)
+                register_code(current_os == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
+                if (!is_alt_tab_active) {
+                    is_alt_tab_active = true;
+                }
+                alt_tab_timer = timer_read();
+                tap_code(KC_TAB);
+                break;
+            case ALT_GUI_REL:
+                register_code(current_os == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
+                if (!is_alt_shift_tab_active) {
+                    is_alt_shift_tab_active = true;
+                }
+                alt_tab_timer = timer_read();
+                tap_code16(LSFT(KC_TAB));
+                break;
             case ZOOM_KC:
                 if (current_os == OS_WINDOWS) {
                     // Windows | Cancel Magnifier
@@ -68,6 +94,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else if (current_os == OS_MACOS) {
                     // MacOS | Toggle Zoom
                     tap_code16(LCA(KC_8));
+                }
+                break;
+            case ZOOM_RER:
+                // Windows: Magnifier - Windows plus/minus sign
+                // MacOS: Zoom - Option (Alt) Command plus/minus sign | Need to enable "Use keyboard shortcuts to zoom"
+                // Linux: Zoom (Gnome) - Super Alt plus/minus sign
+                if (current_os == OS_WINDOWS) {
+                    tap_code16(LGUI(KC_KP_PLUS));
+                } else if (current_os == OS_LINUX) {
+                    tap_code16(LAG(KC_KP_PLUS));
+                } else if (current_os == OS_MACOS) {
+                    tap_code16(LCA(KC_KP_PLUS));
+                }
+                break;
+            case ZOOM_REL:
+                if (current_os == OS_WINDOWS) {
+                    tap_code16(LGUI(KC_KP_MINUS));
+                } else if (current_os == OS_LINUX) {
+                    tap_code16(LAG(KC_KP_MINUS));
+                } else if (current_os == OS_MACOS) {
+                    tap_code16(LCA(KC_KP_MINUS));
                 }
                 break;
             case UG_VK_TOGG:
@@ -116,14 +163,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         oled_write_ln(translate_keycode_string(keycode), false);
 
         // Render keyboard tap, switch back the row/column on master side
-        bool is_master = row >= 6;
-        row            = is_master ? row - 6 : row;
-        column         = is_master ? column + 6 : column;
-        for (uint8_t x = (CUBE_NUMBER * row) + GAP; x < CUBE_NUMBER * (row + 1); x++) {
-            for (uint8_t y = (CUBE_NUMBER * column) + GAP; y < CUBE_NUMBER * (column + 1); y++) {
-                oled_write_pixel(y, x, record->event.pressed);
-            }
-        }
+        // NOTE: Does not support Encoder Map feature
+        // bool is_master = row >= 6;
+        // row            = is_master ? row - 6 : row;
+        // column         = is_master ? column + 6 : column;
+        // for (uint8_t x = (CUBE_NUMBER * row) + GAP; x < CUBE_NUMBER * (row + 1); x++) {
+        //     for (uint8_t y = (CUBE_NUMBER * column) + GAP; y < CUBE_NUMBER * (column + 1); y++) {
+        //         oled_write_pixel(y, x, record->event.pressed);
+        //     }
+        // }
     }
 
     return true;

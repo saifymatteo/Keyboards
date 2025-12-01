@@ -32,14 +32,22 @@ char text_keycode[14];
 enum custom_keycodes {
     // QK_KB_0 is reserved for Trackball enum (8 keys)
     ALT_GUI_KC = QK_KB_8,
+    ALT_GUI_RER,
+    ALT_GUI_REL,
     ZOOM_KC,
+    ZOOM_RER,
+    ZOOM_REL,
     UG_VK_TOGG,
     OS_SWITCH_KC,
 };
 
 KEYCODE_STRING_NAMES_USER(             //
     KEYCODE_STRING_NAME(ALT_GUI_KC),   //
+    KEYCODE_STRING_NAME(ALT_GUI_REL),  //
+    KEYCODE_STRING_NAME(ALT_GUI_RER),  //
     KEYCODE_STRING_NAME(ZOOM_KC),      //
+    KEYCODE_STRING_NAME(ZOOM_REL),     //
+    KEYCODE_STRING_NAME(ZOOM_RER),     //
     KEYCODE_STRING_NAME(UG_VK_TOGG),   //
     KEYCODE_STRING_NAME(OS_SWITCH_KC), //
     // Keycodes not recognised by default
