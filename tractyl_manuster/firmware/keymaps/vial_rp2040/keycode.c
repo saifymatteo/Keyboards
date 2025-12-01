@@ -17,10 +17,6 @@ const char *translate_keycode_string(uint16_t keycode) {
         case RALT_T(KC_ENT): // to fit 14 chars
             return "RALT_T-KC_ENT";
         case DT_UP:
-            user_config.tapping_term = g_tapping_term;
-            eeconfig_update_user(user_config.raw);
-            sprintf(text_keycode, "TAP: %03dms", g_tapping_term);
-            return text_keycode;
         case DT_DOWN:
             user_config.tapping_term = g_tapping_term;
             eeconfig_update_user(user_config.raw);
@@ -51,9 +47,9 @@ bool should_process_keypress(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case ALT_GUI_KC:
-            if (record->event.pressed) {
+    if (record->event.pressed) {
+        switch (keycode) {
+            case ALT_GUI_KC:
                 if (current_os == OS_WINDOWS || current_os == OS_LINUX) {
                     // Windows | Open Task View
                     tap_code16(LGUI(KC_TAB));
@@ -61,10 +57,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     // MacOS | Open Mission Control
                     tap_code(KC_MISSION_CONTROL);
                 }
-            }
-            break;
-        case ZOOM_KC:
-            if (record->event.pressed) {
+                break;
+            case ZOOM_KC:
                 if (current_os == OS_WINDOWS) {
                     // Windows | Cancel Magnifier
                     tap_code16(LGUI(KC_ESC));
@@ -75,15 +69,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     // MacOS | Toggle Zoom
                     tap_code16(LCA(KC_8));
                 }
-            }
-            break;
-        case UG_VK_TOGG:
-            if (record->event.pressed) {
+                break;
+            case UG_VK_TOGG:
                 tap_code16(VK_TOGG);
-            }
-            break;
-        case OS_SWITCH_KC:
-            if (record->event.pressed) {
+                break;
+            case OS_SWITCH_KC:
                 switch (current_os) {
                     case OS_LINUX:
                         current_os = OS_WINDOWS;
@@ -101,8 +91,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         current_os = OS_LINUX;
                         break;
                 }
-            }
-            break;
+                break;
+        }
     }
 
     // Haptic trigger, immediate vibrate with 350ms duration
