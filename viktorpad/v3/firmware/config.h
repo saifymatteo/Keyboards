@@ -7,6 +7,9 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 // Dynamic Keymap
 #define DYNAMIC_KEYMAP_LAYER_COUNT 4
 
+// N-Key Rollover | Allow 248 keys held down at once
+#define NKRO_DEFAULT_ON true
+
 // For OS Detection | helps with detection issue with KVM device
 #define OS_DETECTION_KEYBOARD_RESET
 
