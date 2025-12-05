@@ -6,6 +6,9 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 #define MASTER_RIGHT
 
+// Max dynamic layer for VIAL
+#define DYNAMIC_KEYMAP_LAYER_COUNT 16
+
 // Remnant from USB C Pro Micro
 #define SPLIT_USB_DETECT
 #define SPLIT_USB_TIMEOUT 2500
