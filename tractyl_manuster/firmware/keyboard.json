@@ -18,15 +18,6 @@
     "diode_direction": "COL2ROW",
     "processor": "RP2040",
     "bootloader": "rp2040",
-    "split": {
-        "enabled": true
-    },
-    "features": {
-        "mousekey": true,
-        "extrakey": true,
-        "nkro": true,
-        "pointing_device": true
-    },
     "layouts": {
         "LAYOUT_with_encoder": {
             "layout": [

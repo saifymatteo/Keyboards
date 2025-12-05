@@ -6,10 +6,14 @@ SERIAL_DRIVER = vendor
 I2C_DRIVER_REQUIRED = yes
 SPI_DRIVER_REQUIRED = yes
 
+# Split keyboard
+SPLIT_KEYBOARD = yes
+
 # OS Detection
 OS_DETECTION_ENABLE = yes
 
 # Trackball
+POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = pmw3360
 
 # Deferred Callback
@@ -26,6 +30,15 @@ VELOCIKEY_ENABLE = yes
 
 # Encoders
 ENCODER_ENABLE = yes
+
+# N~Key rollover
+NKRO_ENABLE = yes
+
+# Mouse Key
+MOUSEKEY_ENABLE = yes
+
+# System, Audio control keys
+EXTRAKEY_ENABLE = yes
 
 # OLED
 OLED_ENABLE = yes

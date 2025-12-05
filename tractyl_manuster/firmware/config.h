@@ -6,17 +6,6 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 #define MASTER_RIGHT
 
-// Base trackball
-#define POINTING_DEVICE_RIGHT
-#define SPLIT_POINTING_ENABLE
-#define POINTING_DEVICE_TASK_THROTTLE_MS 1
-#define ROTATIONAL_TRANSFORM_ANGLE  -25
-#define POINTING_DEVICE_INVERT_X
-
-#define SPLIT_TRANSACTION_IDS_KB RPC_ID_KB_CONFIG_SYNC
-
-#define LAYER_STATE_16BIT
-
 // Remnant from USB C Pro Micro
 #define SPLIT_USB_DETECT
 #define SPLIT_USB_TIMEOUT 2500
@@ -100,6 +89,14 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 #define SPI_MISO_PIN GP20
 #define SPI_MOSI_PIN GP19
 #define POINTING_DEVICE_CS_PIN GP21
+
+// Trackball config
+#define POINTING_DEVICE_RIGHT
+#define SPLIT_POINTING_ENABLE
+#define POINTING_DEVICE_TASK_THROTTLE_MS 1
+#define ROTATIONAL_TRANSFORM_ANGLE  -25
+#define POINTING_DEVICE_INVERT_X
+#define SPLIT_TRANSACTION_IDS_KB RPC_ID_KB_CONFIG_SYNC
 
 // Trackball settings
 #define CHARYBDIS_MINIMUM_DEFAULT_DPI 1000    // The minimum sensitivity in default mode.
