@@ -4,23 +4,15 @@ Custom 4x4 Macropad with Rotary Encoder and an OLED screen. Fully design by me.
 
 To view the whole case: [viewstl](https://www.viewstl.com/)
 
-## Version
-
-1. `v1`
-    - 4x4 keys with 3 encoders and 1 OLED
-    - dimension 16cm x 8.63cm
-2. `v2`
-    - 3x4 keys with 3 encoders and 1 OLED
-
 ## Hardware
 
-1. Pro Micro
-2. EC11 Rotary Encoder x3 with Knobs
+1. RP2040 Zero
+2. EC11 Rotary Encoder x4 with Knobs
 3. OLED 0.96 inch 128x64 i2C
 
 ## Getting Started
 
-<!-- Refer `promicro/KBPinouts.png` for right side pin layout and `promicro/wiring_left.png` for left. Both wiring are similar, so can refer left side. -->
+Refer `rp2040_zero_pinout.jpg`for pinout.
 
 ### Guide
 
@@ -47,17 +39,16 @@ Note:
 
 ### Flashing
 
-To flash, use QMK Toolbox.
+To flash, simply drag-and-drop for RP2040.
 
-To flash, choose based on your MCU:
+Start flashing by shorting RUN and GND pin 2 times.
 
-Set local file to `saifymatteo_viktorpad_firmware_vial_matteo.hex` and MCU to `ATmega32U4`.
+Once done, you can proceed to use drag-and-drop the `saifymatteo_viktorpad_firmware_vial_matteo.uf2` file to the RP2040 drive.
 
-Start flashing by shorting RST and GND pin or press the reset switch on the back.
+Note:
 
-Once done, quickly press Flash.
-
-If need to clear EEPROM, double press reset switch and press Clear EEPROM.
+- You need to flash both side with the same `.uf2` file
+- Communication between each side will be automatic once flashed
 
 ## VIAL
 
@@ -69,7 +60,7 @@ Creating the flash file for VIAL enabled are similar with QMK, the difference is
 
 Ensure working directory in `vial-qmk` directory.
 
-Run this to compile to `hex` file.
+Run this to compile to `.uf2` file
 
 ```bash
 make saifymatteo/viktorpad/firmware:vial_matteo

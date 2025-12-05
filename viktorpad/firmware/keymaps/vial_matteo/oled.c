@@ -6,6 +6,7 @@
 
 #include QMK_KEYBOARD_H
 #include "variables.c"
+#include "rgb_underglow.c"
 
 // Keyboard Matrix. Taken from
 // [github](https://github.com/vuon0029/qmk/tree/master/keyboards/mechwild/mercutio/keymaps/dracutio)
@@ -79,7 +80,7 @@ bool oled_task_user(void) {
         }
 
         // Render OS
-        oled_set_cursor(8, 1);
+        oled_set_cursor(8, 0);
         switch (current_os) {
             case OS_LINUX:
                 oled_write_ln("OS: Linux", false);
@@ -97,6 +98,10 @@ bool oled_task_user(void) {
                 oled_write_ln("OS: Unsure", false);
                 break;
         }
+
+        // RGB Light Mode
+        oled_set_cursor(8, 1);
+        oled_write_ln(translate_rgb_mode_string(rgblight_get_mode()), false);
 
         // Render Layers
         oled_set_cursor(8, 2);
@@ -117,9 +122,27 @@ bool oled_task_user(void) {
                 oled_write_ln("Undefined", false);
         }
 
-        if (timer_elapsed(keycode_timer) > 1000) {
-            oled_set_cursor(0, 3);
-            oled_advance_page(true);
+        // Render keyboard state
+        // else,
+        // Clear keycodes text (Row/Column + Keycodes)
+        led_t state = host_keyboard_led_state();
+        oled_set_cursor(8, 3);
+        if (state.caps_lock) {
+            oled_write_ln("Caps Lock", false);
+        } else if (state.num_lock) {
+            oled_write_ln("Num Lock", false);
+        } else if (state.scroll_lock) {
+            oled_write_ln("Scroll Lck", false);
+        } else if (state.compose) {
+            oled_write_ln("Compose", false);
+        } else if (state.kana) {
+            oled_write_ln("Kana", false);
+        } else {
+            // Render DPI Setting when idle
+            if (timer_elapsed(keycode_timer) > 1000) {
+                oled_set_cursor(0, 3);
+                oled_advance_page(true);
+            }
         }
     }
 

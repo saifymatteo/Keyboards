@@ -11,10 +11,22 @@
 
 const char *translate_keycode_string(uint16_t keycode) {
     switch (keycode) {
-        // case RSFT_T(KC_SPC): // to fit 14 chars
-        //     return "RSFT_T-KC_SPC";
-        // case RALT_T(KC_ENT): // to fit 14 chars
-        //     return "RALT_T-KC_ENT";
+        case RSFT_T(KC_SPC): // to fit 14 chars
+            return "RSFT_T-KC_SPC";
+        case RALT_T(KC_ENT): // to fit 14 chars
+            return "RALT_T-KC_ENT";
+        case DT_UP:
+        case DT_DOWN:
+            user_config.tapping_term = g_tapping_term;
+            eeconfig_update_user(user_config.raw);
+            sprintf(text_keycode, "TAP: %03dms", g_tapping_term);
+            return text_keycode;
+        case UG_HUEU:
+            sprintf(text_keycode, "RGB: %03d Hue", rgblight_get_hue());
+            return text_keycode;
+        case UG_VALU:
+            sprintf(text_keycode, "RGB: %03d Val", rgblight_get_val());
+            return text_keycode;
         default:
             return get_keycode_string(keycode);
     }
@@ -128,7 +140,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     // Haptic trigger, immediate vibrate with 350ms duration
-    gpio_write_pin_high(B5);
+    gpio_write_pin_high(GP27);
     defer_exec(350, cancel_haptic, NULL);
 
     uint8_t current_layer = get_highest_layer(layer_state | default_layer_state);
@@ -151,11 +163,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         oled_write_ln(translate_keycode_string(keycode), false);
 
         // Render keyboard tap, switch back the row/column on master side
-        for (uint8_t x = (CUBE_NUMBER * row) + GAP; x < CUBE_NUMBER * (row + 1); x++) {
-            for (uint8_t y = (CUBE_NUMBER * column) + GAP; y < CUBE_NUMBER * (column + 1); y++) {
-                oled_write_pixel(y, x, record->event.pressed);
-            }
-        }
+        // NOTE: Does not support Encoder Map feature
+        // for (uint8_t x = (CUBE_NUMBER * row) + GAP; x < CUBE_NUMBER * (row + 1); x++) {
+        //     for (uint8_t y = (CUBE_NUMBER * column) + GAP; y < CUBE_NUMBER * (column + 1); y++) {
+        //         oled_write_pixel(y, x, record->event.pressed);
+        //     }
+        // }
     }
 
     return true;
@@ -163,13 +176,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
+        refresh_rgb();
+
         // Update timer
         keycode_timer = timer_read();
+
+        // Debug prints
+        switch (current_os) {
+            case OS_LINUX:
+                printf("OS: Linux");
+                break;
+            case OS_WINDOWS:
+                printf("OS: Windows");
+                break;
+            case OS_MACOS:
+                printf("OS: MacOS");
+                break;
+            case OS_IOS:
+                printf("OS: iOS");
+                break;
+            case OS_UNSURE:
+                printf("OS: Unsure");
+                break;
+        }
+        printf(" | "); // Separator
+        printf("Key: %s", translate_keycode_string(keycode));
+        printf("\n"); // New line
     }
 };
 
 // Alternative to [matrix_scan_user]. This function will called after all QMK processing is done.
 void housekeeping_task_user(void) {
+    // Periodically check for RGB timeout
+    check_rgb_timeout();
+
     // ALT key hold timer
     if (is_alt_tab_active | is_alt_shift_tab_active) {
         if (timer_elapsed(alt_tab_timer) > 500) {
@@ -178,4 +218,4 @@ void housekeeping_task_user(void) {
             is_alt_shift_tab_active = false;
         }
     }
-};
+}
