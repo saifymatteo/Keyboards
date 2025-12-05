@@ -73,3 +73,6 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 // Deferred Callbacks
 #define MAX_DEFERRED_EXECUTORS 16
+
+// Allow enter bootloader with double tap of reset button (RUN + GND)
+#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
