@@ -11,30 +11,16 @@ To view the whole case: [viewstl](https://www.viewstl.com/)
 
 ## Hardware
 
-1. Pro Micro 2x USB C (deprecated).
-    1. PWM3360 Sensor
-2. Generic RP2040 2x.
-    1. PWM3360 Sensor
-    2. EC11 Rotary Encoder
-    3. OLED 128x36 i2C
-    4. Passive Piezo Buzzer
-    5. Coin Vibration Motor
+1. RP2040
+2. PWM3360 Sensor
+3. EC11 Rotary Encoder
+4. OLED 128x36 i2C
+5. Passive Piezo Buzzer
+6. Coin Vibration Motor
 
 ## Getting Started
 
-`keymaps_tractyl_manuform.json` is a JSON representation of current configuration. This file need to be converted to C file and compile to `hex` before can be flash.
-
-<details>
-<summary>AVR Pro Micro MCU</summary>
-
-> Refer `promicro/KBPinouts.png` for right side pin layout and `promicro/wiring_left.png` for left. Both wiring are similar, so can refer left side.
-</details>
-
-<details>
-<summary>Generic RP2040</summary>
-
-> Refer `rp2040/tractyl_rp2040_pinout.pdf` for both left and right side pin layout.
-</details>
+Refer `tractyl_rp2040_pinout.pdf` for both left and right side pin layout.
 
 ### Guide
 
@@ -46,75 +32,30 @@ This guide assumed you are already follow root `README.md`, specifically these:
 
 The keyboard will be working on is in this directory `<path-to-qmk-repository>/keyboards/saifymatteo/tractyl_manuster/firmware`, with difference based on your MCU:
 
-- `promicro` and `keymaps/vial_promicro`
-- `rp2040` and `keymaps/vial_rp2040`
-
-#### Convert JSON Keymap to `keymap.c`
-
-Copy `keymaps_tractyl_manuform.json` to `<path-to-qmk-repository>` folder and run next command to convert
-
-To convert keymap from JSON to C file, use this:
-
-```bash
-# for AVR Pro Micro
-qmk json2c keymaps_tractyl_manuform.json >> keyboards/saifymatteo/tractyl_manuster/firmware/keymaps/vial_promicro/keymap.c
-
-# for RP2040
-qmk json2c keymaps_tractyl_manuform.json >> keyboards/saifymatteo/tractyl_manuster/firmware/keymaps/vial_rp2040/keymap.c
-```
-
-Ensure key maps are valid in the generated `keymap.c`
-
-Now we can compile to flash.
-
 ### Compiles
 
 To compile keyboard and keymap:
 
 ```bash
-# for AVR Pro Micro
-qmk compile -kb saifymatteo/tractyl_manuster/firmware/promicro -km vial_promicro
-
-# for RP2040
-qmk compile -kb saifymatteo/tractyl_manuster/firmware/rp2040 -km vial_rp2040
+qmk compile -kb saifymatteo/tractyl_manuster/firmware -km vial
 ```
 
 Note:
 
-- `-kb` is `saifymatteo/tractyl_manuster/firmware/promicro` keyboard config
-- `-km` is `vial_promicro` keyboard mapping
+- `-kb` is `saifymatteo/tractyl_manuster/firmware` keyboard config
+- `-km` is `vial` keyboard mapping
 
 ### Flashing
 
-To flash, use QMK Toolbox (for AVR) or drag-and-drop (for RP2040).
+To flash, simply drag-and-drop for RP2040.
 
-To flash, choose based on your MCU:
+Start flashing by shorting RUN and GND pin 2 times.
 
-<details>
-<summary>AVR Pro Micro MCU</summary>
-
-> Set local file to `saifymatteo_tractyl_manuster_firmware_vial_promicro.hex` and MCU to `ATmega32U4`.
->
-> Start flashing by shorting RST and GND pin or press the reset switch on the back.
->
-> Once done, quickly press Flash.
->
-> If need to clear EEPROM, double press reset switch and press Clear EEPROM.
-</details>
-
-<details>
-<summary>Generic RP2040</summary>
-
-> Refer `rp2040/tractyl_rp2040_pinout.pdf` for both left and right side pin layout.
->
-> Start flashing by shorting RUN and GND pin 2 times.
->
-> Once done, you can proceed to use drag-and-drop the `saifymatteo_tractyl_manuster_firmware_rp2040_vial_rp2040.uf2` file to the RP2040 drive.
-</details>
+Once done, you can proceed to use drag-and-drop the `saifymatteo_tractyl_manuster_firmware_vial.uf2` file to the RP2040 drive.
 
 Note:
 
-- You need to flash both side with the same `hex` or `.uf2` file
+- You need to flash both side with the same `.uf2` file
 - Communication between each side will be automatic once flashed
 
 ## VIAL
@@ -127,14 +68,10 @@ Creating the flash file for VIAL enabled are similar with QMK, the difference is
 
 Ensure working directory in `vial-qmk` directory.
 
-Run this to compile to `hex` or `.uf2` file
+Run this to compile to `.uf2` file
 
 ```bash
-# for AVR Pro Micro
-make saifymatteo/tractyl_manuster/firmware/promicro:vial_promicro
-
-# for RP2040
-make saifymatteo/tractyl_manuster/firmware/rp2040:vial_rp2040
+make saifymatteo/tractyl_manuster/firmware:vial
 ```
 
 ### VIAL Flashing
