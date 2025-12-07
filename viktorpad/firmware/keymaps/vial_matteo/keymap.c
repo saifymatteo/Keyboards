@@ -75,9 +75,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = //
             ),                                              //
         [3] = LAYOUT(                                       //
             MS_BTN4, MS_BTN3, MS_BTN5, OS_SWITCH_KC,        //
-            MS_BTN1, MS_UP, MS_BTN2, PDF(0),                //
+            MS_BTN1, MS_UP, MS_BTN2, PDF(4),                //
             MS_LEFT, MS_DOWN, MS_RGHT, ZOOM_KC,             //
             MS_WHLU, KC_LSFT, MS_WHLD, ALT_GUI_KC           //
+            ),                                              //
+        [4] = LAYOUT(                                       //
+            TD_1_KC, TD_2_KC, TD_3_KC, KC_TRNS,             //
+            TD_4_KC, TD_5_KC, TD_6_KC, PDF(5),              //
+            TD_7_KC, TD_8_KC, TD_9_KC, KC_TRNS,             //
+            KC_LSFT, TD_0_KC, KC_ENT, KC_TRNS               //
+            ),                                              //
+        [5] = LAYOUT(                                       //
+            KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             //
+            KC_TRNS, KC_TRNS, KC_TRNS, PDF(0),              //
+            KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             //
+            KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS              //
             ),                                              //
 };
 

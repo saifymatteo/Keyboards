@@ -49,6 +49,56 @@
             "name": "ROTATE_CANVAS_REL",
             "title": "Rotate Canvas Left Keycode",
             "shortName": "Rotate\nCanvas\nLeft"
+        },
+        {
+            "name": "TD_1_KC",
+            "title": "Tap Dance 1 Keycode",
+            "shortName": "Tap Dance\n1"
+        },
+        {
+            "name": "TD_2_KC",
+            "title": "Tap Dance 2 Keycode",
+            "shortName": "Tap Dance\n2"
+        },
+        {
+            "name": "TD_3_KC",
+            "title": "Tap Dance 3 Keycode",
+            "shortName": "Tap Dance\n3"
+        },
+        {
+            "name": "TD_4_KC",
+            "title": "Tap Dance 4 Keycode",
+            "shortName": "Tap Dance\n4"
+        },
+        {
+            "name": "TD_5_KC",
+            "title": "Tap Dance 5 Keycode",
+            "shortName": "Tap Dance\n5"
+        },
+        {
+            "name": "TD_6_KC",
+            "title": "Tap Dance 6 Keycode",
+            "shortName": "Tap Dance\n6"
+        },
+        {
+            "name": "TD_7_KC",
+            "title": "Tap Dance 7 Keycode",
+            "shortName": "Tap Dance\n7"
+        },
+        {
+            "name": "TD_8_KC",
+            "title": "Tap Dance 8 Keycode",
+            "shortName": "Tap Dance\n8"
+        },
+        {
+            "name": "TD_9_KC",
+            "title": "Tap Dance 9 Keycode",
+            "shortName": "Tap Dance\n9"
+        },
+        {
+            "name": "TD_0_KC",
+            "title": "Tap Dance 0 Keycode",
+            "shortName": "Tap Dance\n0"
         }
     ],
     "layouts": {

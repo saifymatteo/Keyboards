@@ -20,4 +20,10 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [3] = {ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS),                   //
            ENCODER_CCW_CW(ZOOM_REL, ZOOM_RER),                                                   //
            ENCODER_CCW_CW(ALT_GUI_REL, ALT_GUI_RER)},                                            //
+    [4] = {ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS),                   //
+           ENCODER_CCW_CW(KC_TRNS, KC_TRNS),                                                   //
+           ENCODER_CCW_CW(KC_TRNS, KC_TRNS)},                                            //
+    [5] = {ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS),                   //
+           ENCODER_CCW_CW(KC_TRNS, KC_TRNS),                                                   //
+           ENCODER_CCW_CW(KC_TRNS, KC_TRNS)},                                            //
 };

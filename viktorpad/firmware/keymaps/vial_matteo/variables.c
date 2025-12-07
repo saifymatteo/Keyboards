@@ -37,24 +37,45 @@ enum custom_keycodes {
     ZOOM_RER,
     ZOOM_REL,
     OS_SWITCH_KC,
+    // Tap Dance
+    TD_1_KC,
+    TD_2_KC,
+    TD_3_KC,
+    TD_4_KC,
+    TD_5_KC,
+    TD_6_KC,
+    TD_7_KC,
+    TD_8_KC,
+    TD_9_KC,
+    TD_0_KC,
     // App keycode
     ROTATE_CANVAS_RER,
     ROTATE_CANVAS_REL,
 };
 
-KEYCODE_STRING_NAMES_USER(             //
-    KEYCODE_STRING_NAME(ALT_GUI_KC),   //
-    KEYCODE_STRING_NAME(ALT_GUI_RER),  //
-    KEYCODE_STRING_NAME(ALT_GUI_REL),  //
-    KEYCODE_STRING_NAME(ZOOM_KC),      //
-    KEYCODE_STRING_NAME(ZOOM_RER),     //
-    KEYCODE_STRING_NAME(ZOOM_REL),     //
-    KEYCODE_STRING_NAME(OS_SWITCH_KC), //
+KEYCODE_STRING_NAMES_USER(                  //
+    KEYCODE_STRING_NAME(ALT_GUI_KC),        //
+    KEYCODE_STRING_NAME(ALT_GUI_RER),       //
+    KEYCODE_STRING_NAME(ALT_GUI_REL),       //
+    KEYCODE_STRING_NAME(ZOOM_KC),           //
+    KEYCODE_STRING_NAME(ZOOM_RER),          //
+    KEYCODE_STRING_NAME(ZOOM_REL),          //
+    KEYCODE_STRING_NAME(OS_SWITCH_KC),      //
     KEYCODE_STRING_NAME(ROTATE_CANVAS_RER), //
     KEYCODE_STRING_NAME(ROTATE_CANVAS_REL), //
-    // Keycodes not recognised by default
-    KEYCODE_STRING_NAME(KC_APP),  //
-    KEYCODE_STRING_NAME(KC_MUTE), //
+    KEYCODE_STRING_NAME(TD_1_KC),           //
+    KEYCODE_STRING_NAME(TD_2_KC),           //
+    KEYCODE_STRING_NAME(TD_3_KC),           //
+    KEYCODE_STRING_NAME(TD_4_KC),           //
+    KEYCODE_STRING_NAME(TD_5_KC),           //
+    KEYCODE_STRING_NAME(TD_6_KC),           //
+    KEYCODE_STRING_NAME(TD_7_KC),           //
+    KEYCODE_STRING_NAME(TD_8_KC),           //
+    KEYCODE_STRING_NAME(TD_9_KC),           //
+    KEYCODE_STRING_NAME(TD_0_KC),           //
+                                            // Keycodes not recognised by default
+    KEYCODE_STRING_NAME(KC_APP),            //
+    KEYCODE_STRING_NAME(KC_MUTE),           //
 );
 
 // ---------------- RGB UNDERGLOW --------------------------------------------------------------

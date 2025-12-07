@@ -36,6 +36,9 @@ MOUSEKEY_ENABLE = yes
 # System, Audio control keys
 EXTRAKEY_ENABLE = yes
 
+# Tap Dance
+TAP_DANCE_ENABLE = yes
+
 # OLED
 OLED_ENABLE = yes
 OLED_DRIVER = ssd1306

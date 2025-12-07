@@ -118,6 +118,12 @@ bool oled_task_user(void) {
             case 3:
                 oled_write_ln("Mouse", false);
                 break;
+            case 4:
+                oled_write_ln("T9 Keypad", false);
+                break;
+            case 5:
+                oled_write_ln("Setting", false);
+                break;
             default:
                 oled_write_ln("Undefined", false);
         }
