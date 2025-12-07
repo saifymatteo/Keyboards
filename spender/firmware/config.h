@@ -4,6 +4,9 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 #pragma once
 
+// Max dynamic layer for VIAL
+#define DYNAMIC_KEYMAP_LAYER_COUNT 16
+
 // N-Key Rollover | Allow 248 keys held down at once
 #define NKRO_DEFAULT_ON true
 
@@ -19,6 +22,7 @@ Copyright 2025 saifymatteo <dev@saifulmashuri.com>
 
 // Audio features
 #define AUDIO_PIN B6 // Pin for audio output
+#define AUDIO_INIT_DELAY
 #define AUDIO_DAC_SAMPLE_MAX 4095U
 
 // Audio Song

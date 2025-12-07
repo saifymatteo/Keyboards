@@ -16,6 +16,15 @@ AUDIO_ENABLE = yes
 # Encoders
 ENCODER_ENABLE = yes
 
+# N~Key rollover
+NKRO_ENABLE = yes
+
+# Mouse Key
+MOUSEKEY_ENABLE = yes
+
+# System, Audio control keys
+EXTRAKEY_ENABLE = yes
+
 # OLED
 OLED_ENABLE = yes
 OLED_DRIVER = ssd1306

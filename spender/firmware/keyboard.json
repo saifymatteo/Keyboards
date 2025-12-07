@@ -1,7 +1,6 @@
 {
   "keyboard_name": "Spender",
   "manufacturer": "QMK",
-  "url": "",
   "maintainer": "saifymatteo",
   "usb": {
     "vid": "0xFEED",
