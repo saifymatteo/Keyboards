@@ -127,15 +127,16 @@ T9(7, KC_P, KC_Q, KC_R, KC_S, KC_7);
 T9(8, KC_T, KC_U, KC_V, KC_NO, KC_8);
 T9(9, KC_W, KC_X, KC_Y, KC_Z, KC_9);
 
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_1_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, symbol_finished, td_reset), //
-    [TD_2_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_2_finished, td_2_reset), //
-    [TD_3_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_3_finished, td_3_reset), //
-    [TD_4_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_4_finished, td_4_reset), //
-    [TD_5_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_5_finished, td_5_reset), //
-    [TD_6_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_6_finished, td_6_reset), //
-    [TD_7_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_7_finished, td_7_reset), //
-    [TD_8_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_8_finished, td_8_reset), //
-    [TD_9_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_9_finished, td_9_reset), //
-    [TD_0_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space_finished, td_reset),  //
-};
+// Unable to solve error: `multiple definition of `tap_dance_actions'`
+// tap_dance_action_t tap_dance_actions[] = {
+//     [TD_1_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, symbol_finished, td_reset), //
+//     [TD_2_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_2_finished, td_2_reset), //
+//     [TD_3_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_3_finished, td_3_reset), //
+//     [TD_4_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_4_finished, td_4_reset), //
+//     [TD_5_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_5_finished, td_5_reset), //
+//     [TD_6_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_6_finished, td_6_reset), //
+//     [TD_7_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_7_finished, td_7_reset), //
+//     [TD_8_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_8_finished, td_8_reset), //
+//     [TD_9_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_9_finished, td_9_reset), //
+//     [TD_0_KC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, space_finished, td_reset),  //
+// };
