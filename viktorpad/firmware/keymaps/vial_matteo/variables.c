@@ -6,16 +6,36 @@
 
 #include QMK_KEYBOARD_H
 
+// 1st layer on the cycle
+#define LAYER_CYCLE_START 0
+// Last layer on the cycle
+#define LAYER_CYCLE_END 5
+
 // ---------------- TAP TERM --------------------------------------------------------------
 
 typedef union {
     uint32_t raw;
     struct {
         uint32_t tapping_term;
+        bool     haptic_enable;
     };
 } user_config_t;
 
 user_config_t user_config;
+
+// ---------------- Tap Dance --------------------------------------------------------------
+
+typedef enum {
+    TD_NONE,
+    TD_UNKNOWN,
+    TD_SINGLE_HOLD,
+    TD_SINGLE_TAP,
+    TD_DOUBLE_TAP,
+    TD_TRIPLE_TAP,
+    TD_QUAD_TAP,
+} td_state_t;
+
+static td_state_t td_state = TD_NONE;
 
 // ---------------- OS DETECTION --------------------------------------------------------------
 
@@ -37,6 +57,9 @@ enum custom_keycodes {
     ZOOM_RER,
     ZOOM_REL,
     OS_SWITCH_KC,
+    HAPTIC_TOGGLE_KC,
+    LAYER_UP_KC,
+    LAYER_DOWN_KC,
     // Tap Dance
     TD_1_KC,
     TD_2_KC,
@@ -61,8 +84,9 @@ KEYCODE_STRING_NAMES_USER(                  //
     KEYCODE_STRING_NAME(ZOOM_RER),          //
     KEYCODE_STRING_NAME(ZOOM_REL),          //
     KEYCODE_STRING_NAME(OS_SWITCH_KC),      //
-    KEYCODE_STRING_NAME(ROTATE_CANVAS_RER), //
-    KEYCODE_STRING_NAME(ROTATE_CANVAS_REL), //
+    KEYCODE_STRING_NAME(HAPTIC_TOGGLE_KC),  //
+    KEYCODE_STRING_NAME(LAYER_UP_KC),       //
+    KEYCODE_STRING_NAME(LAYER_DOWN_KC),     //
     KEYCODE_STRING_NAME(TD_1_KC),           //
     KEYCODE_STRING_NAME(TD_2_KC),           //
     KEYCODE_STRING_NAME(TD_3_KC),           //
@@ -73,6 +97,8 @@ KEYCODE_STRING_NAMES_USER(                  //
     KEYCODE_STRING_NAME(TD_8_KC),           //
     KEYCODE_STRING_NAME(TD_9_KC),           //
     KEYCODE_STRING_NAME(TD_0_KC),           //
+    KEYCODE_STRING_NAME(ROTATE_CANVAS_RER), //
+    KEYCODE_STRING_NAME(ROTATE_CANVAS_REL), //
                                             // Keycodes not recognised by default
     KEYCODE_STRING_NAME(KC_APP),            //
     KEYCODE_STRING_NAME(KC_MUTE),           //

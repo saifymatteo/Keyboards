@@ -41,8 +41,19 @@
             "shortName": "OS\nSwitch"
         },
         {
+            "name": "HAPTIC_TOGGLE_KC",
+            "title": "Toggle Haptic On/Off Keycode",
+            "shortName": "Toggle\nHaptic"
         },
         {
+            "name": "LAYER_UP_KC",
+            "title": "Layer Up Keycode",
+            "shortName": "Layer\nUp"
+        },
+        {
+            "name": "LAYER_DOWN_KC",
+            "title": "Layer Down Keycode",
+            "shortName": "Layer\nDown"
         },
         {
             "name": "TD_1_KC",

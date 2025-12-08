@@ -9,18 +9,6 @@
 #include QMK_KEYBOARD_H
 #include "variables.c"
 
-typedef enum {
-    TD_NONE,
-    TD_UNKNOWN,
-    TD_SINGLE_HOLD,
-    TD_SINGLE_TAP,
-    TD_DOUBLE_TAP,
-    TD_TRIPLE_TAP,
-    TD_QUAD_TAP,
-} td_state_t;
-
-static td_state_t td_state = TD_NONE;
-
 // Determine current tap-dance state
 td_state_t cur_dance(tap_dance_state_t *state) {
     switch (state->count) {

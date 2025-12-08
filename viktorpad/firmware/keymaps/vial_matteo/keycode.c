@@ -15,10 +15,11 @@ const char *translate_keycode_string(uint16_t keycode) {
             return "RSFT_T-KC_SPC";
         case RALT_T(KC_ENT): // to fit 14 chars
             return "RALT_T-KC_ENT";
+        case HAPTIC_TOGGLE_KC:
+            sprintf(text_keycode, "HAPTIC: %d", user_config.haptic_enable);
+            return text_keycode;
         case DT_UP:
         case DT_DOWN:
-            user_config.tapping_term = g_tapping_term;
-            eeconfig_update_user(user_config.raw);
             sprintf(text_keycode, "TAP: %03dms", g_tapping_term);
             return text_keycode;
         case UG_HUEU:
@@ -33,6 +34,8 @@ const char *translate_keycode_string(uint16_t keycode) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    uint8_t current_layer = get_highest_layer(layer_state | default_layer_state);
+
     if (record->event.pressed) {
         switch (keycode) {
             case ALT_GUI_KC:
@@ -118,6 +121,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         break;
                 }
                 break;
+            case HAPTIC_TOGGLE_KC:
+                if (user_config.haptic_enable) {
+                    user_config.haptic_enable = false;
+                } else {
+                    user_config.haptic_enable = true;
+                }
+                eeconfig_update_user(user_config.raw);
+                break;
+            case LAYER_UP_KC:
+                if (current_layer == LAYER_CYCLE_END) {
+                    tap_code16(PDF(LAYER_CYCLE_START));
+                } else {
+                    tap_code16(PDF(current_layer + 1));
+                }
+                break;
+            case LAYER_DOWN_KC:
+                if (current_layer == LAYER_CYCLE_START) {
+                    tap_code16(PDF(LAYER_CYCLE_END));
+                } else {
+                    tap_code16(PDF(current_layer - 1));
+                }
+                break;
+            case DT_UP:
+            case DT_DOWN:
+                user_config.tapping_term = g_tapping_term;
+                eeconfig_update_user(user_config.raw);
+                break;
             case ROTATE_CANVAS_RER:
                 tap_code(KC_SPACE);
                 tap_code(KC_LEFT_ALT);
@@ -132,10 +162,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     // Haptic trigger, immediate vibrate with 350ms duration
-    gpio_write_pin_high(GP27);
-    defer_exec(350, cancel_haptic, NULL);
+    if (user_config.haptic_enable) {
+        gpio_write_pin_high(GP27);
+        defer_exec(350, cancel_haptic, NULL);
+    }
 
-    uint8_t current_layer = get_highest_layer(layer_state | default_layer_state);
     if (current_layer != 1) {
         // Row and column swapped based on config
         // - Max row = 5 + 1 encoder row
