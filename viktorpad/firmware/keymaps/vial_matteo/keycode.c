@@ -33,9 +33,9 @@ const char *translate_keycode_string(uint16_t keycode) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case ALT_GUI_KC:
-            if (record->event.pressed) {
+    if (record->event.pressed) {
+        switch (keycode) {
+            case ALT_GUI_KC:
                 if (current_os == OS_WINDOWS || current_os == OS_LINUX) {
                     // Windows | Open Task View
                     tap_code16(LGUI(KC_TAB));
@@ -43,30 +43,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     // MacOS | Open Mission Control
                     tap_code(KC_MISSION_CONTROL);
                 }
-            }
-            break;
-        case ALT_GUI_RER: // Alt tab
-            // Windows: Alt tab (need to hold alt)
-            // MacOS: Command tab (need to hold command)
-            register_code(current_os == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
-            if (!is_alt_tab_active) {
-                is_alt_tab_active = true;
-            }
-            alt_tab_timer = timer_read();
-            tap_code(KC_TAB);
-            oled_write_ln("RE_ALT_GUI+", false);
-            break;
-        case ALT_GUI_REL: // Shift alt tab
-            register_code(current_os == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
-            if (!is_alt_shift_tab_active) {
-                is_alt_shift_tab_active = true;
-            }
-            alt_tab_timer = timer_read();
-            tap_code16(LSFT(KC_TAB));
-            oled_write_ln("RE_ALT_GUI-", false);
-            break;
-        case ZOOM_KC:
-            if (record->event.pressed) {
+                break;
+            case ALT_GUI_RER: // Alt tab
+                // Windows: Alt tab (need to hold alt)
+                // MacOS: Command tab (need to hold command)
+                register_code(current_os == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
+                if (!is_alt_tab_active) {
+                    is_alt_tab_active = true;
+                }
+                alt_tab_timer = timer_read();
+                tap_code(KC_TAB);
+                oled_write_ln("RE_ALT_GUI+", false);
+                break;
+            case ALT_GUI_REL: // Shift alt tab
+                register_code(current_os == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
+                if (!is_alt_shift_tab_active) {
+                    is_alt_shift_tab_active = true;
+                }
+                alt_tab_timer = timer_read();
+                tap_code16(LSFT(KC_TAB));
+                oled_write_ln("RE_ALT_GUI-", false);
+                break;
+            case ZOOM_KC:
                 if (current_os == OS_WINDOWS) {
                     // Windows | Cancel Magnifier
                     tap_code16(LGUI(KC_ESC));
@@ -77,33 +75,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     // MacOS | Toggle Zoom
                     tap_code16(LCA(KC_8));
                 }
-            }
-            break;
-        case ZOOM_RER: // OS zoom in
-            // Windows: Magnifier - Windows plus/minus sign
-            // MacOS: Zoom - Option (Alt) Command plus/minus sign | Need to enable "Use keyboard shortcuts to zoom"
-            // Linux: Zoom (Gnome) - Super Alt plus/minus sign
-            if (current_os == OS_WINDOWS) {
-                tap_code16(LGUI(KC_KP_PLUS));
-            } else if (current_os == OS_LINUX) {
-                tap_code16(LAG(KC_KP_PLUS));
-            } else if (current_os == OS_MACOS) {
-                tap_code16(LCA(KC_KP_PLUS));
-            }
-            oled_write_ln("RE_ZOOM+", false);
-            break;
-        case ZOOM_REL: // OS zoom out
-            if (current_os == OS_WINDOWS) {
-                tap_code16(LGUI(KC_KP_MINUS));
-            } else if (current_os == OS_LINUX) {
-                tap_code16(LAG(KC_KP_MINUS));
-            } else if (current_os == OS_MACOS) {
-                tap_code16(LCA(KC_KP_MINUS));
-            }
-            oled_write_ln("RE_ZOOM-", false);
-            break;
-        case OS_SWITCH_KC:
-            if (record->event.pressed) {
+                break;
+            case ZOOM_RER: // OS zoom in
+                // Windows: Magnifier - Windows plus/minus sign
+                // MacOS: Zoom - Option (Alt) Command plus/minus sign | Need to enable "Use keyboard shortcuts to zoom"
+                // Linux: Zoom (Gnome) - Super Alt plus/minus sign
+                if (current_os == OS_WINDOWS) {
+                    tap_code16(LGUI(KC_KP_PLUS));
+                } else if (current_os == OS_LINUX) {
+                    tap_code16(LAG(KC_KP_PLUS));
+                } else if (current_os == OS_MACOS) {
+                    tap_code16(LCA(KC_KP_PLUS));
+                }
+                oled_write_ln("RE_ZOOM+", false);
+                break;
+            case ZOOM_REL: // OS zoom out
+                if (current_os == OS_WINDOWS) {
+                    tap_code16(LGUI(KC_KP_MINUS));
+                } else if (current_os == OS_LINUX) {
+                    tap_code16(LAG(KC_KP_MINUS));
+                } else if (current_os == OS_MACOS) {
+                    tap_code16(LCA(KC_KP_MINUS));
+                }
+                oled_write_ln("RE_ZOOM-", false);
+                break;
+            case OS_SWITCH_KC:
                 switch (current_os) {
                     case OS_LINUX:
                         current_os = OS_WINDOWS;
@@ -121,22 +117,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         current_os = OS_LINUX;
                         break;
                 }
-            }
-            break;
-        case ROTATE_CANVAS_RER:
-            if (record->event.pressed) {
+                break;
+            case ROTATE_CANVAS_RER:
                 tap_code(KC_SPACE);
                 tap_code(KC_LEFT_ALT);
                 tap_code(MS_RGHT);
-            }
-            break;
-        case ROTATE_CANVAS_REL:
-            if (record->event.pressed) {
+                break;
+            case ROTATE_CANVAS_REL:
                 tap_code(KC_SPACE);
                 tap_code(KC_LEFT_ALT);
                 tap_code(MS_LEFT);
-            }
-            break;
+                break;
+        }
     }
 
     // Haptic trigger, immediate vibrate with 350ms duration

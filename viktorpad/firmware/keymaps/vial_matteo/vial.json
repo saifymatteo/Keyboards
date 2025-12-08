@@ -41,14 +41,8 @@
             "shortName": "OS\nSwitch"
         },
         {
-            "name": "ROTATE_CANVAS_RER",
-            "title": "Rotate Canvas Right Keycode",
-            "shortName": "Rotate\nCanvas\nRight"
         },
         {
-            "name": "ROTATE_CANVAS_REL",
-            "title": "Rotate Canvas Left Keycode",
-            "shortName": "Rotate\nCanvas\nLeft"
         },
         {
             "name": "TD_1_KC",
@@ -99,6 +93,16 @@
             "name": "TD_0_KC",
             "title": "Tap Dance 0 Keycode",
             "shortName": "Tap Dance\n0"
+        },
+        {
+            "name": "ROTATE_CANVAS_RER",
+            "title": "Rotate Canvas Right Keycode",
+            "shortName": "Rotate\nCanvas\nRight"
+        },
+        {
+            "name": "ROTATE_CANVAS_REL",
+            "title": "Rotate Canvas Left Keycode",
+            "shortName": "Rotate\nCanvas\nLeft"
         }
     ],
     "layouts": {
