@@ -30,7 +30,7 @@ uint16_t keycode_timer = 0;
 char text_keycode[14];
 
 enum custom_keycodes {
-    ALT_GUI_KC = SAFE_RANGE,
+    ALT_GUI_KC = QK_KB_0,
     ALT_GUI_REL,
     ALT_GUI_RER,
     OS_SWITCH_KC,
