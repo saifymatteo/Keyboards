@@ -10,7 +10,6 @@
 #include "haptic.c"
 #include "keycode.c"
 #include "os_detection.c"
-#include "tap_dance.c"
 
 void keyboard_pre_init_user(void) {
     // Haptic motor PIN
@@ -31,6 +30,10 @@ void keyboard_post_init_user(void) {
     user_config.raw = eeconfig_read_user();
     if (user_config.tapping_term != TAPPING_TERM) {
         g_tapping_term = user_config.tapping_term;
+    }
+    // Update the haptic if true
+    if (user_config.haptic_enable) {
+        user_config.haptic_enable = true;
     }
 }
 
@@ -57,7 +60,7 @@ void suspend_power_down_user(void) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = //
     {
         [0] = LAYOUT(                                        // Default
-            KC_F22, KC_F23, KC_F24, PDF(5),                  //
+            KC_F22, KC_F23, KC_F24, PDF(4),                  //
             KC_F19, KC_F20, KC_F21, PDF(1),                  //
             KC_F16, KC_F17, KC_F18, LCTL(KC_0),              //
             LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), KC_TRNS      //
@@ -74,20 +77,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = //
             KC_LSFT, KC_X, KC_C, KC_MEDIA_PLAY_PAUSE,        //
             KC_LCTL, KC_LALT, KC_SPC, KC_MUTE                //
             ),                                               //
-        [3] = LAYOUT(                                        // Mouse
+        [3] = LAYOUT(                                        // Navigation
             MS_BTN4, MS_BTN3, MS_BTN5, PDF(2),               //
             MS_BTN1, MS_UP, MS_BTN2, PDF(4),                 //
             MS_LEFT, MS_DOWN, MS_RGHT, ZOOM_KC,              //
             MS_WHLU, KC_LSFT, MS_WHLD, ALT_GUI_KC            //
             ),                                               //
-        [4] = LAYOUT(                                        // T9 Keypad
-            TD(TD_1_KC), TD(TD_2_KC), TD(TD_3_KC), PDF(3),   //
-            TD(TD_4_KC), TD(TD_5_KC), TD(TD_6_KC), PDF(5),   //
-            TD(TD_7_KC), TD(TD_8_KC), TD(TD_9_KC), KC_TRNS,  //
-            KC_LSFT, TD(TD_0_KC), KC_ENT, KC_TRNS            //
-            ),                                               //
-        [5] = LAYOUT(                                        // Settings
-            QK_RBT, EE_CLR, QK_BOOT, PDF(4),                 //
+        [4] = LAYOUT(                                        // Settings
+            QK_RBT, EE_CLR, QK_BOOT, PDF(3),                 //
             AU_TOGG, OS_SWITCH_KC, HAPTIC_TOGGLE_KC, PDF(0), //
             UG_SATU, UG_HUEU, UG_NEXT, VK_TOGG,              //
             UG_SATD, UG_HUED, UG_PREV, UG_TOGG               //

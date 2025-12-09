@@ -23,10 +23,23 @@ const char *translate_keycode_string(uint16_t keycode) {
             sprintf(text_keycode, "TAP: %03dms", g_tapping_term);
             return text_keycode;
         case UG_HUEU:
+        case UG_HUED:
             sprintf(text_keycode, "RGB: %03d Hue", rgblight_get_hue());
             return text_keycode;
         case UG_VALU:
+        case UG_VALD:
             sprintf(text_keycode, "RGB: %03d Val", rgblight_get_val());
+            return text_keycode;
+        case UG_SPDU:
+        case UG_SPDD:
+            sprintf(text_keycode, "RGB: %03d Spd", rgblight_get_speed());
+            return text_keycode;
+        case UG_SATU:
+        case UG_SATD:
+            sprintf(text_keycode, "RGB: %03d Sat", rgblight_get_sat());
+            return text_keycode;
+        case AU_TOGG:
+            sprintf(text_keycode, "Audio: %d", audio_is_on());
             return text_keycode;
         default:
             return get_keycode_string(keycode);
@@ -56,7 +69,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 alt_tab_timer = timer_read();
                 tap_code(KC_TAB);
-                oled_write_ln("RE_ALT_GUI+", false);
                 break;
             case ALT_GUI_REL: // Shift alt tab
                 register_code(current_os == OS_MACOS ? KC_LEFT_CTRL : KC_LALT);
@@ -65,7 +77,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 alt_tab_timer = timer_read();
                 tap_code16(LSFT(KC_TAB));
-                oled_write_ln("RE_ALT_GUI-", false);
                 break;
             case ZOOM_KC:
                 if (current_os == OS_WINDOWS) {
@@ -90,7 +101,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else if (current_os == OS_MACOS) {
                     tap_code16(LCA(KC_KP_PLUS));
                 }
-                oled_write_ln("RE_ZOOM+", false);
                 break;
             case ZOOM_REL: // OS zoom out
                 if (current_os == OS_WINDOWS) {
@@ -100,7 +110,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else if (current_os == OS_MACOS) {
                     tap_code16(LCA(KC_KP_MINUS));
                 }
-                oled_write_ln("RE_ZOOM-", false);
                 break;
             case OS_SWITCH_KC:
                 switch (current_os) {
@@ -129,34 +138,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 eeconfig_update_user(user_config.raw);
                 break;
-            case LAYER_UP_KC:
-                if (current_layer == LAYER_CYCLE_END) {
-                    tap_code16(PDF(LAYER_CYCLE_START));
-                } else {
-                    tap_code16(PDF(current_layer + 1));
-                }
-                break;
-            case LAYER_DOWN_KC:
-                if (current_layer == LAYER_CYCLE_START) {
-                    tap_code16(PDF(LAYER_CYCLE_END));
-                } else {
-                    tap_code16(PDF(current_layer - 1));
-                }
-                break;
             case DT_UP:
             case DT_DOWN:
                 user_config.tapping_term = g_tapping_term;
                 eeconfig_update_user(user_config.raw);
                 break;
             case ROTATE_CANVAS_RER:
-                tap_code(KC_SPACE);
-                tap_code(KC_LEFT_ALT);
-                tap_code(MS_RGHT);
+                register_code(KC_SPACE);
+                register_code(KC_LEFT_ALT);
+                register_code(MS_BTN1);
+                register_code(MS_RGHT);
                 break;
             case ROTATE_CANVAS_REL:
-                tap_code(KC_SPACE);
-                tap_code(KC_LEFT_ALT);
-                tap_code(MS_LEFT);
+                register_code(KC_SPACE);
+                register_code(KC_LEFT_ALT);
+                register_code(MS_BTN1);
+                register_code(MS_LEFT);
+                break;
+            case BRUSH_SIZE_RER:
+                register_code(MS_RGHT);
+                tap_code16(LCA(MS_BTN1));
+                break;
+            case BRUSH_SIZE_REL:
+                register_code(MS_LEFT);
+                tap_code16(LCA(MS_BTN1));
                 break;
         }
     }
@@ -167,31 +172,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         defer_exec(350, cancel_haptic, NULL);
     }
 
-    if (current_layer != 1) {
-        // Row and column swapped based on config
-        // - Max row = 5 + 1 encoder row
-        // - Max column = 12
+    if (current_layer == 4) {
         uint8_t row    = record->event.key.row;
         uint8_t column = record->event.key.col;
 
         // Render Row and Column text
+        sprintf(text_row_col, "R%02d-C%d", row, column);
         oled_set_cursor(0, 3);
-        oled_write_P(PSTR("R"), false);
-        oled_write(get_u8_str(row, '0'), false);
-        oled_write_P(PSTR("-C"), false);
-        oled_write_ln(get_u8_str(column, ' '), false);
+        oled_write_ln(text_row_col, false);
 
         // Render current key name
         oled_set_cursor(8, 3);
         oled_write_ln(translate_keycode_string(keycode), false);
-
-        // Render keyboard tap, switch back the row/column on master side
-        // NOTE: Does not support Encoder Map feature
-        // for (uint8_t x = (CUBE_NUMBER * row) + GAP; x < CUBE_NUMBER * (row + 1); x++) {
-        //     for (uint8_t y = (CUBE_NUMBER * column) + GAP; y < CUBE_NUMBER * (column + 1); y++) {
-        //         oled_write_pixel(y, x, record->event.pressed);
-        //     }
-        // }
     }
 
     return true;
@@ -200,31 +192,56 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         refresh_rgb();
+    }
 
-        // Update timer
-        keycode_timer = timer_read();
+    // Cannot put under `record->event.pressed` as the
+    // [translate_keycode_string] will trigger multiple times
 
-        // Debug prints
-        switch (current_os) {
-            case OS_LINUX:
-                printf("OS: Linux");
-                break;
-            case OS_WINDOWS:
-                printf("OS: Windows");
-                break;
-            case OS_MACOS:
-                printf("OS: MacOS");
-                break;
-            case OS_IOS:
-                printf("OS: iOS");
-                break;
-            case OS_UNSURE:
-                printf("OS: Unsure");
-                break;
-        }
-        printf(" | "); // Separator
-        printf("Key: %s", translate_keycode_string(keycode));
-        printf("\n"); // New line
+    // Update timer
+    keycode_timer = timer_read();
+
+    // Debug prints
+    switch (current_os) {
+        case OS_LINUX:
+            printf("OS: Linux");
+            break;
+        case OS_WINDOWS:
+            printf("OS: Windows");
+            break;
+        case OS_MACOS:
+            printf("OS: MacOS");
+            break;
+        case OS_IOS:
+            printf("OS: iOS");
+            break;
+        case OS_UNSURE:
+            printf("OS: Unsure");
+            break;
+    }
+    printf(" | "); // Separator
+    printf("Key: %s", translate_keycode_string(keycode));
+    printf("\n"); // New line
+
+    // Clear up key register
+    switch (keycode) {
+        case ROTATE_CANVAS_RER:
+            unregister_code(KC_SPACE);
+            unregister_code(KC_LEFT_ALT);
+            unregister_code(MS_BTN1);
+            unregister_code(MS_RGHT);
+            break;
+        case ROTATE_CANVAS_REL:
+            unregister_code(KC_SPACE);
+            unregister_code(KC_LEFT_ALT);
+            unregister_code(MS_BTN1);
+            unregister_code(MS_LEFT);
+            break;
+        case BRUSH_SIZE_RER:
+            unregister_code(MS_RGHT);
+            break;
+        case BRUSH_SIZE_REL:
+            unregister_code(MS_LEFT);
+            break;
     }
 };
 
