@@ -23,9 +23,11 @@ const char *translate_keycode_string(uint16_t keycode) {
             sprintf(text_keycode, "TAP: %03dms", g_tapping_term);
             return text_keycode;
         case UG_HUEU:
+        case UG_HUED:
             sprintf(text_keycode, "RGB: %03d Hue", rgblight_get_hue());
             return text_keycode;
         case UG_VALU:
+        case UG_VALD:
             sprintf(text_keycode, "RGB: %03d Val", rgblight_get_val());
             return text_keycode;
         case SNIPING_MODE:
