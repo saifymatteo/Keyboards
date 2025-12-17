@@ -6,9 +6,6 @@ SERIAL_DRIVER = vendor
 I2C_DRIVER_REQUIRED = yes
 SPI_DRIVER_REQUIRED = yes
 
-# Split keyboard
-SPLIT_KEYBOARD = yes
-
 # OS Detection
 OS_DETECTION_ENABLE = yes
 
