@@ -157,11 +157,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 break;
             case BRUSH_SIZE_RER:
                 register_code(MS_RGHT);
-                tap_code16(LCA(MS_BTN1));
+                register_code16(LCA(MS_BTN1));
                 break;
             case BRUSH_SIZE_REL:
                 register_code(MS_LEFT);
-                tap_code16(LCA(MS_BTN1));
+                register_code16(LCA(MS_BTN1));
                 break;
         }
     }
@@ -223,25 +223,29 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
     printf("\n"); // New line
 
     // Clear up key register
-    switch (keycode) {
-        case ROTATE_CANVAS_RER:
-            unregister_code(KC_SPACE);
-            unregister_code(KC_LEFT_ALT);
-            unregister_code(MS_BTN1);
-            unregister_code(MS_RGHT);
-            break;
-        case ROTATE_CANVAS_REL:
-            unregister_code(KC_SPACE);
-            unregister_code(KC_LEFT_ALT);
-            unregister_code(MS_BTN1);
-            unregister_code(MS_LEFT);
-            break;
-        case BRUSH_SIZE_RER:
-            unregister_code(MS_RGHT);
-            break;
-        case BRUSH_SIZE_REL:
-            unregister_code(MS_LEFT);
-            break;
+    if (!record->event.pressed) {
+        switch (keycode) {
+            case ROTATE_CANVAS_RER:
+                unregister_code(KC_SPACE);
+                unregister_code(KC_LEFT_ALT);
+                unregister_code(MS_BTN1);
+                unregister_code(MS_RGHT);
+                break;
+            case ROTATE_CANVAS_REL:
+                unregister_code(KC_SPACE);
+                unregister_code(KC_LEFT_ALT);
+                unregister_code(MS_BTN1);
+                unregister_code(MS_LEFT);
+                break;
+            case BRUSH_SIZE_RER:
+                unregister_code(MS_RGHT);
+                unregister_code16(LCA(MS_BTN1));
+                break;
+            case BRUSH_SIZE_REL:
+                unregister_code(MS_LEFT);
+                unregister_code16(LCA(MS_BTN1));
+                break;
+        }
     }
 };
 
