@@ -60,10 +60,10 @@ void suspend_power_down_user(void) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = //
     {
         [0] = LAYOUT(                                        // Default
-            KC_F22, KC_F23, KC_F24, PDF(4),                  //
-            KC_F19, KC_F20, KC_F21, PDF(1),                  //
-            KC_F16, KC_F17, KC_F18, LCTL(KC_0),              //
-            LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), KC_TRNS      //
+            LCTL(KC_S), KC_B, KC_E, PDF(4),                  //
+            KC_M, KC_V, KC_L, PDF(1),                        //
+            LCTL(KC_T), KC_ENT, LCTL(KC_D), LCTL(KC_0),      //
+            LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), LCTL(KC_G)   //
             ),                                               //
         [1] = LAYOUT(                                        // Numpad
             KC_KP_7, KC_KP_8, KC_KP_9, PDF(0),               //
