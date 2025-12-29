@@ -149,9 +149,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     defer_exec(350, cancel_haptic, NULL);
 
     if (is_keyboard_master()) {
-        // Row and column swapped based on config
-        // - Max row = 12
-        // - Max column = 6
         uint8_t row    = record->event.key.row;
         uint8_t column = record->event.key.col;
 
@@ -163,17 +160,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Render current key name
         oled_set_cursor(8, 3);
         oled_write_ln(translate_keycode_string(keycode), false);
-
-        // Render keyboard tap, switch back the row/column on master side
-        // NOTE: Does not support Encoder Map feature
-        // bool is_master = row >= 6;
-        // row            = is_master ? row - 6 : row;
-        // column         = is_master ? column + 6 : column;
-        // for (uint8_t x = (CUBE_NUMBER * row) + GAP; x < CUBE_NUMBER * (row + 1); x++) {
-        //     for (uint8_t y = (CUBE_NUMBER * column) + GAP; y < CUBE_NUMBER * (column + 1); y++) {
-        //         oled_write_pixel(y, x, record->event.pressed);
-        //     }
-        // }
     }
 
     return true;

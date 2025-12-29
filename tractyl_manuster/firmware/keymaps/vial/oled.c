@@ -8,21 +8,12 @@
 #include "variables.c"
 #include "rgb_underglow.c"
 
-// Keyboard Matrix. Taken from [github](https://github.com/vuon0029/qmk/tree/master/keyboards/mechwild/mercutio/keymaps/dracutio)
 // Bongo cat OLED. Taken from [github](https://github.com/nwii/oledbongocat)
 
 // Custom animation guide:
 // 1. Get a any video or gif
 // 2. To convert video to gif, use this: `ffmpeg -i <video-file> -vf "fps=10" -loop 0 <gif-output>`
 // 3. Convert from Gif. [github](https://github.com/AskMeAboutBirds/qmk-oled-animation-compressor)
-
-// Keyboard Matrix display
-#define MATRIX_DISPLAY_X 36
-#define MATRIX_DISPLAY_Y 18
-
-// Keyboard Unit size
-#define GAP 1
-#define CUBE_NUMBER 3
 
 // Bongo cat
 #define TAP_FRAMES 2
@@ -55,23 +46,8 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
-        // Render Keyboard Box
-        oled_set_cursor(0, 0);
-        for (uint8_t x = 0; x < MATRIX_DISPLAY_X; x++) {
-            oled_write_pixel(x, 0, true);
-        }
-        for (uint8_t y = 0; y < MATRIX_DISPLAY_Y; y++) {
-            oled_write_pixel(0, y, true);
-        }
-        for (uint8_t x = 0; x < MATRIX_DISPLAY_X; x++) {
-            oled_write_pixel(x, MATRIX_DISPLAY_Y, true);
-        }
-        for (uint8_t y = 0; y < MATRIX_DISPLAY_Y; y++) {
-            oled_write_pixel(MATRIX_DISPLAY_X, y, true);
-        }
-
         // Render OS
-        oled_set_cursor(8, 0);
+        oled_set_cursor(0, 0);
         switch (current_os) {
             case OS_LINUX:
                 oled_write_ln("OS: Linux", false);
@@ -91,11 +67,11 @@ bool oled_task_user(void) {
         }
 
         // RGB Light Mode
-        oled_set_cursor(8, 1);
+        oled_set_cursor(0, 1);
         oled_write_ln(translate_rgb_mode_string(rgblight_get_mode()), false);
 
         // Render Layers
-        oled_set_cursor(8, 2);
+        oled_set_cursor(0, 2);
         switch (get_highest_layer(layer_state | default_layer_state)) {
             case 0:
                 oled_write_ln("Colemak-DH", false);
@@ -117,7 +93,7 @@ bool oled_task_user(void) {
         // else,
         // Clear keycodes text (Row/Column + Keycodes)
         led_t state = host_keyboard_led_state();
-        oled_set_cursor(8, 3);
+        oled_set_cursor(0, 3);
         if (state.caps_lock) {
             oled_write_ln("Caps Lock", false);
         } else if (state.num_lock) {
