@@ -1,6 +1,3 @@
-# Bootloader
-BOOTLOADER = caterina
-
 # Backlight LED
 RGBLIGHT_ENABLE = yes
 

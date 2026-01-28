@@ -16,19 +16,21 @@ This guide assumed you are already follow root `README.md`, specifically these:
 2. Setup VS Code for C development
 3. Create symbolic link between this repository and QMK/Vial repository
 
-The keyboard will be working on is in this directory `<path-to-qmk-repository>/keyboards/saifymatteo/led_strip/firmware`.
+The keyboard will be working on is in this directory `<path-to-qmk-repository>/keyboards/saifymatteo/led_strip/promicro_x6/firmware`.
 
 ### Compiles
+
+Choose your version of how many LED are in the strip, example x6 means 6 LED in a single strip
 
 To compile keyboard and keymap:
 
 ```bash
-qmk compile -kb saifymatteo/led_strip/firmware -km vial
+qmk compile -kb saifymatteo/led_strip/promicro_x6/firmware -km vial
 ```
 
 Note:
 
-- `-kb` is `saifymatteo/led_strip/firmware` keyboard config
+- `-kb` is `saifymatteo/led_strip/promicro_x6/firmware` keyboard config
 - `-km` is `vial` keyboard mapping
 
 ### Flashing
@@ -37,7 +39,7 @@ To flash, use QMK Toolbox.
 
 To flash, choose based on your MCU:
 
-Set local file to `saifymatteo_led_strip_firmware_vial.hex` and MCU to `ATmega32U4`.
+Set local file to `saifymatteo_led_strip_firmware_promicro_x6_vial.hex` and MCU to `ATmega32U4`.
 
 Start flashing by shorting RST and GND pin or press the reset switch on the back.
 
@@ -58,7 +60,7 @@ Ensure working directory in `vial-qmk` directory.
 Run this to compile to `hex` file.
 
 ```bash
-make saifymatteo/led_strip/firmware:vial
+make saifymatteo/led_strip/promicro_x6/firmware:vial
 ```
 
 ### VIAL Flashing
