@@ -16,7 +16,7 @@ This guide assumed you are already follow root `README.md`, specifically these:
 2. Setup VS Code for C development
 3. Create symbolic link between this repository and QMK/Vial repository
 
-The keyboard will be working on is in this directory `<path-to-qmk-repository>/keyboards/saifymatteo/led_strip/promicro_x6/firmware`.
+The keyboard will be working on is in this directory `<path-to-qmk-repository>/keyboards/saifymatteo/led_strip/firmware/promicro_x6`.
 
 ### Compiles
 
@@ -25,12 +25,12 @@ Choose your version of how many LED are in the strip, example x6 means 6 LED in 
 To compile keyboard and keymap:
 
 ```bash
-qmk compile -kb saifymatteo/led_strip/promicro_x6/firmware -km vial
+qmk compile -kb saifymatteo/led_strip/firmware/promicro_x6 -km vial
 ```
 
 Note:
 
-- `-kb` is `saifymatteo/led_strip/promicro_x6/firmware` keyboard config
+- `-kb` is `saifymatteo/led_strip/firmware/promicro_x6` keyboard config
 - `-km` is `vial` keyboard mapping
 
 ### Flashing
@@ -60,7 +60,7 @@ Ensure working directory in `vial-qmk` directory.
 Run this to compile to `hex` file.
 
 ```bash
-make saifymatteo/led_strip/promicro_x6/firmware:vial
+make saifymatteo/led_strip/firmware/promicro_x6:vial
 ```
 
 ### VIAL Flashing
