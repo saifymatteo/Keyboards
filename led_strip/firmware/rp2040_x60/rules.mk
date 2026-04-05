@@ -1,0 +1,15 @@
+# Bootloader
+BOOTLOADER = rp2040
+
+# Driver
+SERIAL_DRIVER = vendor
+I2C_DRIVER_REQUIRED = yes
+SPI_DRIVER_REQUIRED = yes
+
+# Backlight LED
+RGBLIGHT_ENABLE = yes
+WS2812_DRIVER = vendor
+
+# Debug
+CONSOLE_ENABLE = yes
+KEYCODE_STRING_ENABLE = yes

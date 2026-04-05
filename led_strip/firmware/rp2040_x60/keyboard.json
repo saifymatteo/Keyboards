@@ -1,0 +1,12 @@
+{
+    "keyboard_name": "LED Strip x60 | RP2040",
+    "matrix_pins": {
+        "direct": [
+            ["GP29", "GP3"],
+            ["GP27", "GP5"],
+            ["GP15", "GP7"]
+        ]
+    },
+    "processor": "RP2040",
+    "bootloader": "rp2040"
+}
