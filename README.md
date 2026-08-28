@@ -46,7 +46,7 @@ Then in VS Code, run these command palette in order:
 
 ## Compiles & Flashing
 
-### Spender
+### [Spender](./spender/readme.md)
 
 To compiles, run these:
 
@@ -60,13 +60,24 @@ qmk flash saifymatteo_spender_firmware_vial.hex --mcu AT90USB1286
 
 Then enter bootloader and it will auto flash
 
-### Tractyl Manuster
+### [Tractyl Manuster](./tractyl_manuster/README.md)
 
 To compiles, run these:
 
 ```bash
 # Compiles
-make saifymatteo/tractyl_manuster/firmware/rp2040:vial_rp2040
+make saifymatteo/tractyl_manuster/firmware:vial
 ```
 
-Then enter bootloader and copy paste `saifymatteo_tractyl_manuster_firmware_rp2040_vial_rp2040.uf2` into RP2040 drive
+Then enter bootloader and copy paste `saifymatteo_tractyl_manuster_firmware_vial.uf2` into RP2040 drive
+
+### [Viktorpad](./viktorpad/README.md)
+
+To compiles, run these:
+
+```bash
+# Compiles
+make saifymatteo/viktorpad/firmware:vial
+```
+
+Then enter bootloader and copy paste `saifymatteo_viktorpad_firmware_vial.uf2` into RP2040 drive

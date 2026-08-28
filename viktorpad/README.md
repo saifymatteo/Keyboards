@@ -69,3 +69,36 @@ make saifymatteo/viktorpad/firmware:vial_matteo
 ### VIAL Flashing
 
 Please see [QMK flashing](#flashing)
+
+## Images
+
+<details>
+<summary>unsoldered - inside</summary>
+
+![unsoldered-inside](images/PXL_20251127_150212354.jpg)
+</details>
+<details>
+<summary>unsoldered - front</summary>
+
+![unsoldered-front](images/PXL_20251127_150219403.jpg)
+</details>
+<details>
+<summary>soldered - inside</summary>
+
+![soldered-inside](images/PXL_20251130_143649438.jpg)
+</details>
+<details>
+<summary>partial soldered - inside</summary>
+
+![partial-soldered-inside](images/PXL_20251205_123444751.jpg)
+</details>
+<details>
+<summary>full soldered - inside</summary>
+
+![full-soldered-inside](images/PXL_20251209_125524822.jpg)
+</details>
+<details>
+<summary>close-up backplate</summary>
+
+![close-up-backplate](images/PXL_20251209_125528103.jpg)
+</details>
