@@ -1,5 +1,7 @@
 # Tractyl Manuster
 
+![tractyl-manuster-featured-keyboard](images/PXL_20241107_162940886.jpg)
+
 Inspiration from [Schievel1](https://github.com/Schievel1/dactyl_manuform_r_track) and [noahprince22](https://github.com/noahprince22/tractyl-manuform-keyboard)
 
 Use these STL files from u/Tonehaven2 instead:
@@ -97,11 +99,6 @@ Please see [QMK flashing](#flashing)
 <summary>Right side</summary>
 
 ![master-right-side](images/40a449f4-e20b-490b-82b0-d6f21da3e662.jpg)
-</details>
-<details>
-<summary>Preview of non functioning</summary>
-
-![both-side-non-functioning](images/PXL_20241107_162940886.jpg)
 </details>
 <details>
 <summary>PWM3360 overview, don't judge me</summary>

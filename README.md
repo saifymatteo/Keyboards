@@ -48,6 +48,8 @@ Then in VS Code, run these command palette in order:
 
 ### [Spender](./spender/readme.md)
 
+![spender-featured-keyboard](spender/images/PXL_20250216_155312548.jpg)
+
 To compiles, run these:
 
 ```bash
@@ -62,6 +64,8 @@ Then enter bootloader and it will auto flash
 
 ### [Tractyl Manuster](./tractyl_manuster/README.md)
 
+![tractyl-manuster-featured-keyboard](tractyl_manuster/images/PXL_20241107_162940886.jpg)
+
 To compiles, run these:
 
 ```bash
@@ -72,6 +76,8 @@ make saifymatteo/tractyl_manuster/firmware:vial
 Then enter bootloader and copy paste `saifymatteo_tractyl_manuster_firmware_vial.uf2` into RP2040 drive
 
 ### [Viktorpad](./viktorpad/README.md)
+
+![viktorpad-featured-keyboard](viktorpad/images/PXL_20251127_150219403.jpg)
 
 To compiles, run these:
 

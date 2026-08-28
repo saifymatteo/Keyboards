@@ -1,5 +1,7 @@
 # ViktorPad
 
+![viktorpad-featured-keyboard](images/PXL_20251127_150219403.jpg)
+
 Custom 4x4 Macropad with Rotary Encoder and an OLED screen. Fully design by me.
 
 To view the whole case: [viewstl](https://www.viewstl.com/)
@@ -76,11 +78,6 @@ Please see [QMK flashing](#flashing)
 <summary>unsoldered - inside</summary>
 
 ![unsoldered-inside](images/PXL_20251127_150212354.jpg)
-</details>
-<details>
-<summary>unsoldered - front</summary>
-
-![unsoldered-front](images/PXL_20251127_150219403.jpg)
 </details>
 <details>
 <summary>soldered - inside</summary>

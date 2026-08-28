@@ -1,5 +1,7 @@
 # Spender
 
+![spender-featured-keyboard](images/PXL_20250216_155312548.jpg)
+
 Inspiration from [Pteron](https://github.com/FSund/pteron-keyboard)
 
 Refer STLs and Drawing (dxf or svg format) in STL folder
@@ -115,14 +117,9 @@ Please see [QMK flashing](#flashing)
 ![back-plate-with-rubber-feet](images/PXL_20250216_155243587.jpg)
 </details>
 <details>
-<summary>Front view with keycaps #1</summary>
+<summary>Front view with keycaps</summary>
 
-![front-with-keycaps-1](images/PXL_20250216_155301028.jpg)
-</details>
-<details>
-<summary>Front view with keycaps #2</summary>
-
-![front-with-keycaps-2](images/PXL_20250216_155312548.jpg)
+![front-with-keycaps](images/PXL_20250216_155301028.jpg)
 </details>
 <details>
 <summary>Comparison keyboard height with 18650 battery</summary>
